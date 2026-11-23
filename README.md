@@ -28,7 +28,7 @@ alpha-house-website/
 3. Fill `js/config.js` (`AH_FIREBASE_CONFIG`).
 4. Enable **Authentication → Sign-in method → Email/Password**.
 5. Create **Firestore Database** (production mode).
-6. Create **Storage** bucket.
+6. (Optional) Create **Storage** bucket — image upload works without it via compressed base64 (free, no billing).
 7. Deploy rules:
    - Firestore rules: paste `firestore.rules` in Console → Firestore → Rules → Publish.
    - Storage rules: paste `storage.rules` in Console → Storage → Rules → Publish.
