@@ -69,14 +69,50 @@
     window.location.href = 'login.html';
   });
 
-  // ============ IMAGE UPLOAD (Firebase Storage) ============
+  // ============ IMAGE UPLOAD ============
+  // Free-tier friendly: uses Firebase Storage if available, otherwise compresses
+  // the image to a base64 data URL stored directly in Firestore (no billing).
+  async function compressToBase64(file, maxWidth, quality) {
+    maxWidth = maxWidth || 1000;
+    quality = quality || 0.7;
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const img = new Image();
+        img.onload = () => {
+          let w = img.width, h = img.height;
+          if (w > maxWidth) { h = Math.round(h * maxWidth / w); w = maxWidth; }
+          const canvas = document.createElement('canvas');
+          canvas.width = w; canvas.height = h;
+          const ctx = canvas.getContext('2d');
+          ctx.drawImage(img, 0, 0, w, h);
+          try {
+            resolve(canvas.toDataURL('image/jpeg', quality));
+          } catch (err) { reject(err); }
+        };
+        img.onerror = reject;
+        img.src = e.target.result;
+      };
+      reader.onerror = reject;
+      reader.readAsDataURL(file);
+    });
+  }
+
   async function uploadImage(file) {
-    if (!storage) throw new Error('Storage not configured');
-    const ext = (file.name.split('.').pop() || 'jpg').toLowerCase();
-    const path = `property-images/uploads/${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`;
-    const ref = storage.ref().child(path);
-    await ref.put(file);
-    return await ref.getDownloadURL();
+    // Try Firebase Storage first (if enabled)
+    if (storage) {
+      try {
+        const ext = (file.name.split('.').pop() || 'jpg').toLowerCase();
+        const path = `property-images/uploads/${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`;
+        const ref = storage.ref().child(path);
+        await ref.put(file);
+        return await ref.getDownloadURL();
+      } catch (e) {
+        console.warn('Storage upload failed, falling back to base64:', e.message);
+      }
+    }
+    // Free fallback: compressed base64 (no billing, no Storage)
+    return await compressToBase64(file, 1000, 0.7);
   }
 
   function previewImages(input, previewEl, hiddenInput, existingUrls) {
