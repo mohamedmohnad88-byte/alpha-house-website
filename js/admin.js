@@ -4,26 +4,35 @@
   const db = AH.fb;
   const storage = (AH.firebase && AH.firebase.storage) ? AH.firebase.storage : null;
 
+  function dbg(msg) {
+    const el = document.getElementById('debugPanel');
+    if (el) { el.textContent += msg + '\\n'; }
+    console.log('[admin]', msg);
+  }
+
   // ============ AUTH GUARD ============
   async function guard() {
+    dbg('guard start; db=' + !!db + ' auth=' + !!auth);
     if (!db || !auth) {
       const el = document.getElementById('propertiesTableWrap');
       if (el) el.innerHTML = '<p class="form-status error">Firebase غير مُعد. تحقق من js/config.js.</p>';
+      dbg('Firebase not configured');
       return false;
     }
     return new Promise((resolve) => {
       const unsub = auth.onAuthStateChanged(async (user) => {
         unsub();
         if (!user) {
+          dbg('no user -> redirect login');
           window.location.href = 'login.html';
           resolve(false);
           return;
         }
-        console.log('[admin] logged in as', user.uid, user.email);
+        dbg('logged in as UID=' + user.uid + ' email=' + user.email);
         try {
           const snap = await db.collection('users').doc(user.uid).get();
           if (!snap.exists) {
-            console.error('[admin] no users doc for', user.uid);
+            dbg('no users doc for ' + user.uid);
             await auth.signOut();
             alert('هذا الحساب غير مسجل كمدير (لا يوجد users/' + user.uid + ').');
             window.location.href = 'login.html';
@@ -31,8 +40,8 @@
             return;
           }
           const role = snap.data().role;
+          dbg('role = ' + role);
           if (role !== 'admin') {
-            console.error('[admin] role is', role);
             await auth.signOut();
             alert('دور الحساب: ' + role + ' (ليس admin).');
             window.location.href = 'login.html';
@@ -41,10 +50,10 @@
           }
           const el = document.getElementById('adminEmail');
           if (el) el.textContent = user.email + ' (admin)';
-          console.log('[admin] guard OK');
+          dbg('guard OK');
           resolve(true);
         } catch (e) {
-          console.error('[admin] guard error', e);
+          dbg('guard error: ' + e.message);
           const el = document.getElementById('propertiesTableWrap');
           if (el) el.innerHTML = '<p class="form-status error">خطأ: ' + e.message + '</p>';
           resolve(false);
@@ -215,10 +224,10 @@
   async function loadProperties() {
     const wrap = document.getElementById('propertiesTableWrap');
     wrap.innerHTML = '<p style="color:var(--text-muted);">جاري التحميل...</p>';
-    console.log('[admin] loadProperties start');
+    dbg('loadProperties start');
     try {
       const snap = await db.collection('properties').get();
-      console.log('[admin] get() returned', snap.size, 'docs');
+      dbg('get() returned ' + snap.size + ' docs');
       allPropsCache = snap.docs.map((d) => ({ id: d.id, ...d.data() }));
       allPropsCache.sort((a,b) => {
         const ta = a.created_at && a.created_at.toDate ? a.created_at.toDate().getTime() : 0;
@@ -227,7 +236,7 @@
       });
       renderPropertiesTable(wrap);
     } catch (e) {
-      console.error('[admin] loadProperties error', e);
+      dbg('loadProperties error: ' + e.message);
       wrap.innerHTML = '<p class="form-status error">خطأ: ' + esc(e.message) + '</p>' +
         '<button class="btn btn-ghost btn-sm" onclick="location.reload()" style="margin-top:10px;">إعادة تحميل</button>';
       return;
