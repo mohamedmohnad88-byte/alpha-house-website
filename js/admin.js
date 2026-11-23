@@ -703,11 +703,44 @@
     });
   }
 
+  async function loadSocial() {
+    try {
+      const snap = await db.collection('settings').doc('social').get();
+      const d = snap.exists ? snap.data() : {};
+      const form = document.getElementById('socialForm');
+      if (!form) return;
+      form.facebook.value = d.facebook || '';
+      form.instagram.value = d.instagram || '';
+      form.twitter.value = d.twitter || '';
+      form.tiktok.value = d.tiktok || '';
+    } catch (e) { console.error(e); }
+  }
+
+  document.getElementById('socialForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const form = e.target;
+    const statusEl = document.getElementById('socialStatus');
+    const payload = {
+      facebook: form.facebook.value.trim() || null,
+      instagram: form.instagram.value.trim() || null,
+      twitter: form.twitter.value.trim() || null,
+      tiktok: form.tiktok.value.trim() || null,
+      updated_at: firebase.firestore.FieldValue.serverTimestamp()
+    };
+    try {
+      await db.collection('settings').doc('social').set(payload, { merge: true });
+      toast(statusEl, 'تم حفظ الروابط.', true);
+    } catch (err) {
+      toast(statusEl, err.message, false);
+    }
+  });
+
   function loadTab(tab) {
     if (tab === 'properties') loadProperties();
     else if (tab === 'projects') loadProjects();
     else if (tab === 'areas') loadAreas();
     else if (tab === 'inquiries') loadInquiries();
+    else if (tab === 'settings') loadSocial();
   }
 
   // ============ INIT ============

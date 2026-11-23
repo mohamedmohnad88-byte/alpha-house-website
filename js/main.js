@@ -159,6 +159,19 @@
     }, { rootMargin: '-40% 0px -55% 0px' });
     sections.forEach((s) => io.observe(s));
   }
+  // ============ SOCIAL LINKS (from Firestore) ============
+  if (window.AH.fb) {
+    window.AH.fb.collection('settings').doc('social').get().then((snap) => {
+      if (!snap.exists) return;
+      const d = snap.data();
+      document.querySelectorAll('[data-social]').forEach((a) => {
+        const key = a.getAttribute('data-social');
+        if (d[key]) { a.href = d[key]; a.style.opacity = '1'; }
+        else { a.style.display = 'none'; }
+      });
+    }).catch(() => {});
+  }
+
   // ============ CAREERS WA BUTTON ============
   const careersBtn = document.getElementById('careersWaBtn');
   if (careersBtn) {
