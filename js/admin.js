@@ -187,6 +187,8 @@
     form.area_en.value = p.area_en || '';
     form.size.value = p.size || '';
     form.price.value = p.price != null ? p.price : '';
+    form.rooms.value = p.rooms != null ? p.rooms : '';
+    form.bathrooms.value = p.bathrooms != null ? p.bathrooms : '';
     form.status.value = p.status || 'draft';
     form.is_published.checked = !!p.is_published;
     form.is_featured.checked = !!p.is_featured;
@@ -239,6 +241,8 @@
       area_en: form.area_en.value.trim(),
       size: parseFloat(form.size.value) || 0,
       price: form.price.value ? parseFloat(form.price.value) : null,
+      rooms: form.rooms.value ? parseInt(form.rooms.value) : null,
+      bathrooms: form.bathrooms.value ? parseInt(form.bathrooms.value) : null,
       status: form.status.value,
       is_published: form.is_published.checked,
       is_featured: form.is_featured.checked,

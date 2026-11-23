@@ -70,6 +70,8 @@
         <div class="spec"><div class="lbl">${t['detail.type'] || 'Type'}</div><div class="val">${lang === 'ar' ? p.unit_type_ar : p.unit_type_en}</div></div>
         <div class="spec"><div class="lbl">${t['detail.area'] || 'Area'}</div><div class="val">${lang === 'ar' ? p.area_ar : p.area_en}</div></div>
         <div class="spec"><div class="lbl">${t['detail.size'] || 'Size'}</div><div class="val">${p.size} m²</div></div>
+        ${p.rooms ? `<div class="spec"><div class="lbl">${lang==='ar'?'غرف':'Rooms'}</div><div class="val">${p.rooms}</div></div>` : ''}
+        ${p.bathrooms ? `<div class="spec"><div class="lbl">${lang==='ar'?'حمامات':'Bathrooms'}</div><div class="val">${p.bathrooms}</div></div>` : ''}
         <div class="spec"><div class="lbl">${t['detail.status'] || 'Status'}</div><div class="val">${AH.statusLabel(p.status, lang)}</div></div>
       `;
     }
@@ -83,12 +85,20 @@
 
     const pname = lang === 'ar' ? p.name_ar : p.name_en;
     const waBtn = document.getElementById('waInquiryBtn');
-    if (waBtn) {
-      waBtn.onclick = () => {
-        const text = lang === 'ar' ? "مرحبًا مستر محمد، أود الاستفسار عن: " + pname : "Hello Mr. Mohamed, I would like to inquire about: " + pname;
-        window.open(AH.WA + "?text=" + encodeURIComponent(text), "_blank");
-      };
-    }
+    const waMsg = () => {
+      const l = L();
+      let text = l === 'ar' ? 'مرحبًا ALPHA HOUSE،\nأرغب في طلب معاينة للعقار التالي:\n' : 'Hello ALPHA HOUSE,\nI would like to request a viewing for the following property:\n';
+      text += (l==='ar'?'اسم العقار: ':'Property name: ') + pname + '\n';
+      text += (l==='ar'?'المنطقة: ':'Area: ') + (lang === 'ar' ? p.area_ar : p.area_en) + '\n';
+      text += (l==='ar'?'السعر: ':'Price: ') + (p.price != null ? Number(p.price).toLocaleString() + ' ' + (l==='ar'?'ج.م':'EGP') : '—') + '\n';
+      text += (l==='ar'?'المساحة: ':'Size: ') + p.size + ' m²\n';
+      text += (l==='ar'?'رابط العقار: ':'Property link: ') + window.location.href + '\n';
+      text += l==='ar' ? '\nأرغب في تحديد موعد للمعاينة ومعرفة التفاصيل المتاحة.\nشكرًا لكم.' : '\nI would like to schedule a viewing and get available details.\nThank you.';
+      return text;
+    };
+    if (waBtn) waBtn.onclick = () => window.open(AH.WA + "?text=" + encodeURIComponent(waMsg()), "_blank");
+    const mobileBtn = document.getElementById('mobileWaBtn');
+    if (mobileBtn) mobileBtn.onclick = () => window.open(AH.WA + "?text=" + encodeURIComponent(waMsg()), "_blank");
     const callBtn = document.getElementById('callBtn');
     if (callBtn) callBtn.onclick = () => { window.location.href = "tel:" + AH.PHONE_INTL; };
 

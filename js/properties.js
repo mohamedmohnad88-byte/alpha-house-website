@@ -12,6 +12,7 @@
   const areaSel = document.getElementById('filterArea');
   const priceSel = document.getElementById('filterPrice');
   const sizeSel = document.getElementById('filterSize');
+  const searchInput = document.getElementById('searchInput');
 
   function L() { return AH.getLang(); }
 
@@ -93,6 +94,7 @@
     const price = priceSel ? priceSel.value : '';
     const size = sizeSel ? sizeSel.value : '';
 
+    const q = (searchInput ? searchInput.value : '').trim().toLowerCase();
     let filtered = allProps.filter((p) => {
       if (type && p.type !== type) return false;
       const unitName = lang === 'ar' ? p.unit_type_ar : p.unit_type_en;
@@ -106,6 +108,10 @@
       if (size) {
         const [mn, mx] = size.split('-').map(Number);
         if (p.size < mn || p.size > mx) return false;
+      }
+      if (q) {
+        const hay = [p.name_ar, p.name_en, p.area_ar, p.area_en, p.unit_type_ar, p.unit_type_en, p.description_ar, p.description_en].join(' ').toLowerCase();
+        if (!hay.includes(q)) return false;
       }
       return true;
     });
@@ -144,12 +150,14 @@
           <h3 class="property-title">${name}</h3>
           <div class="property-meta">
             <span>📐 ${p.size} m²</span>
+            ${p.rooms ? `<span>🛏 ${p.rooms}</span>` : ''}
+            ${p.bathrooms ? `<span>🛁 ${p.bathrooms}</span>` : ''}
             <span>🏷️ ${p.type === 'residential' ? (t['properties.residential'] || 'Residential') : (t['properties.commercial'] || 'Commercial')}</span>
           </div>
           <div class="property-price">${priceStr}</div>
           <div class="property-actions">
             <a class="btn btn-primary btn-sm" href="property.html?id=${p.id}">${lang === 'ar' ? 'التفاصيل' : 'Details'}</a>
-            <button class="btn btn-whatsapp btn-sm" data-wa-property="${name}">WhatsApp</button>
+            <button class="btn btn-whatsapp btn-sm" data-wa-property="${name}" data-prop-id="${p.id}">WhatsApp</button>
           </div>
         </div>
       `;
@@ -160,7 +168,20 @@
       btn.addEventListener('click', (e) => {
         e.preventDefault();
         const pname = btn.getAttribute('data-wa-property');
-        const text = L() === 'ar' ? "مرحبًا مستر محمد، أود الاستفسار عن: " + pname : "Hello Mr. Mohamed, I would like to inquire about: " + pname;
+        const pid = btn.getAttribute('data-prop-id');
+        const prop = allProps.find((x) => x.id === pid);
+        const l = L();
+        let text = l === 'ar' ? 'مرحبًا ALPHA HOUSE،\nأرغب في طلب معاينة للعقار التالي:\n' : 'Hello ALPHA HOUSE,\nI would like to request a viewing for the following property:\n';
+        if (prop) {
+          text += (l==='ar'?'اسم العقار: ':'Property name: ') + (l==='ar'?prop.name_ar:prop.name_en) + '\n';
+          text += (l==='ar'?'المنطقة: ':'Area: ') + (l==='ar'?prop.area_ar:prop.area_en) + '\n';
+          text += (l==='ar'?'السعر: ':'Price: ') + (prop.price != null ? Number(prop.price).toLocaleString() + ' ' + (l==='ar'?'ج.م':'EGP') : '—') + '\n';
+          text += (l==='ar'?'المساحة: ':'Size: ') + prop.size + ' m²\n';
+        } else {
+          text += pname + '\n';
+        }
+        text += (l==='ar'?'رابط العقار: ':'Property link: ') + window.location.origin + window.location.pathname.replace('properties.html','') + 'property.html?id=' + pid + '\n';
+        text += l==='ar' ? '\nأرغب في تحديد موعد للمعاينة ومعرفة التفاصيل المتاحة.\nشكرًا لكم.' : '\nI would like to schedule a viewing and get available details.\nThank you.';
         window.open(AH.WA + "?text=" + encodeURIComponent(text), "_blank");
       });
     });
@@ -191,8 +212,10 @@
   const resetBtn = document.getElementById('resetFilters');
   if (resetBtn) resetBtn.addEventListener('click', () => {
     [typeSel, unitSel, areaSel, priceSel, sizeSel].forEach((s) => { if (s) s.value = ''; });
+    if (searchInput) searchInput.value = '';
     render();
   });
+  if (searchInput) searchInput.addEventListener('input', render);
 
   const origSetLang = AH.setLang;
   AH.setLang = function (lang) {

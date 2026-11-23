@@ -3,14 +3,22 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Alpha House Real Estate — مدينة العبور</title>
-  <meta name="description" content="Alpha House Real Estate — شركة متخصصة في تسويق العقارات والمشروعات والوحدات السكنية والتجارية في مدينة العبور – مصر." />
+  <title>ALPHA HOUSE REAL ESTATE — عقارات فاخرة في مدينة العبور</title>
+  <meta name="description" content="ALPHA HOUSE REAL ESTATE — شركة متخصصة في تسويق العقارات والمشروعات والوحدات السكنية والتجارية في مدينة العبور، مصر." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="css/variables.css" />
   <link rel="stylesheet" href="css/base.css" />
   <link rel="stylesheet" href="css/components.css" />
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-storage-compat.js"></script>
+  <script src="js/config.js"></script>
+  <script src="js/firebase.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/i18n.js"></script>
 </head>
 <body>
 
@@ -31,30 +39,33 @@
     <div class="nav-actions">
       <button class="lang-toggle" id="langToggle">EN</button>
       <a href="contact.html" class="btn btn-primary btn-sm" data-i18n="nav.cta">استفسار سريع</a>
-      <button class="hamburger" id="hamburger" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
+      <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
     </div>
   </div>
 </header>
 
 <!-- HERO -->
 <section class="hero" id="home">
-  <div class="hero-bg">
-    <img src="assets/img/hero.svg" alt="Alpha House" />
-    <div class="hero-overlay"></div>
-  </div>
+  <div class="hero-canvas-wrap" id="heroCanvas"></div>
+  <div class="hero-overlay"></div>
   <div class="container">
     <div class="hero-content reveal">
-      <span class="hero-eyebrow" data-i18n="hero.eyebrow">ALPHA HOUSE REAL ESTATE</span>
-      <h1 class="hero-title" data-i18n="hero.title">منزل أحلامك في مدينة العبور يبدأ من هنا</h1>
-      <p class="hero-sub" data-i18n="hero.sub">Alpha House Real Estate — شريكك العقاري الموثوق في مدينة العبور.</p>
+      <span class="hero-eyebrow">ALPHA HOUSE REAL ESTATE</span>
+      <h1 class="hero-title">
+        نصنع <span class="gradient-gold">تجربة عقارية</span><br/>في مدينة العبور
+      </h1>
+      <p class="hero-sub">
+        Alpha House Real Estate — شريكك في إيجاد الوحدة السكنية أو التجارية المناسبة
+        في مدينة العبور، مصر. نعمل بشفافية واحترافية، من الاستفسار الأولي حتى التسليم.
+      </p>
       <div class="hero-cta">
-        <a href="properties.html" class="btn btn-primary btn-lg" data-i18n="hero.cta1">استكشف العقارات</a>
-        <a href="https://wa.me/201557222799" target="_blank" rel="noopener" class="btn btn-outline btn-lg" data-i18n="hero.cta2" dir="ltr">تواصل مع مستر محمد</a>
+        <a href="properties.html" class="btn btn-primary btn-lg">استكشف العقارات</a>
+        <a href="https://wa.me/201557222799" target="_blank" rel="noopener" class="btn btn-outline btn-lg" dir="ltr">تواصل معنا</a>
       </div>
       <div class="hero-stats">
-        <div class="hero-stat"><div class="num" data-count="8">0</div><div class="lbl" data-i18n="hero.stat1">عقار معروض</div></div>
-        <div class="hero-stat"><div class="num" data-count="9">0</div><div class="lbl" data-i18n="hero.stat2">منطقة في العبور</div></div>
-        <div class="hero-stat"><div class="num" data-count="100">0</div><div class="lbl" data-i18n="hero.stat3">رضا العملاء</div></div>
+        <div class="hero-stat"><div class="num" data-count="8">0</div><div class="lbl">عقارات معروضة</div></div>
+        <div class="hero-stat"><div class="num" data-count="9">0</div><div class="lbl">مناطق في العبور</div></div>
+        <div class="hero-stat"><div class="num" data-count="100">0</div><div class="lbl">رضا العملاء</div></div>
       </div>
     </div>
   </div>
@@ -67,61 +78,49 @@
       <img src="assets/img/about.svg" alt="About Alpha House" loading="lazy" />
     </div>
     <div class="reveal">
-      <span class="eyebrow" data-i18n="about.eyebrow">من نحن</span>
-      <h2 data-i18n="about.title">خبرة ومعرفة بسوق مدينة العبور</h2>
-      <p data-i18n="about.p1">Alpha House Real Estate شركة متخصصة في تسويق العقارات.</p>
-      <p data-i18n="about.p2">نُقدّر ثقة عملائنا.</p>
+      <span class="eyebrow">من نحن</span>
+      <h2>خبرة ومعرفة بسوق مدينة العبور</h2>
+      <p>
+        Alpha House Real Estate شركة متخصصة في تسويق العقارات والمشروعات والوحدات
+        السكنية والتجارية في مدينة العبور – مصر. نربط العملاء بالفرص العقارية
+        المناسبة من خلال تواصل شخصي واحترافي.
+      </p>
+      <p>
+        نُقدّر ثقة عملائنا، ولذلك نلتزم بالوضوح والشفافية في كل مرحلة،
+        من الاستفسار الأولي حتى إتمام الصفقة.
+      </p>
       <ul class="check-list">
-        <li data-i18n="about.li1">عقارات سكنية وتجارية في مدينة العبور</li>
-        <li data-i18n="about.li2">تواصل مباشر مع مستر محمد</li>
-        <li data-i18n="about.li3">استشارات عقارية مخصصة</li>
-        <li data-i18n="about.li4">مرافقة كاملة من البحث حتى التسليم</li>
+        <li>عقارات سكنية وتجارية في مدينة العبور</li>
+        <li>تواصل مباشر مع مستر محمد (المسؤول)</li>
+        <li>استشارات عقارية مخصصة لاحتياجاتك</li>
+        <li>مرافقة كاملة من البحث حتى التسليم</li>
       </ul>
-      <a href="about.html" class="btn btn-outline" data-i18n="hero.cta1">المزيد عنا</a>
-    </div>
-  </div>
-</section>
-
-<!-- SERVICES -->
-<section class="section section-alt" id="services">
-  <div class="container">
-    <div class="section-head reveal">
-      <span class="eyebrow" data-i18n="services.eyebrow">خدماتنا</span>
-      <h2 data-i18n="services.title">خدمات عقارية متكاملة</h2>
-      <p data-i18n="services.sub">نقدم حلولاً عقارية شاملة.</p>
-    </div>
-    <div class="services-grid">
-      <div class="service-card reveal"><div class="service-icon">🏠</div><h3 data-i18n="svc1.t">تسويق العقارات</h3><p data-i18n="svc1.d">عرض وتسويق الوحدات.</p></div>
-      <div class="service-card reveal"><div class="service-icon">💬</div><h3 data-i18n="svc2.t">استشارات عقارية</h3><p data-i18n="svc2.d">نصائح مبنية على السوق.</p></div>
-      <div class="service-card reveal"><div class="service-icon">🏗️</div><h3 data-i18n="svc3.t">إدارة المشروعات</h3><p data-i18n="svc3.d">متابعة وإدارة.</p></div>
-      <div class="service-card reveal"><div class="service-icon">📊</div><h3 data-i18n="svc4.t">تقييم العقارات</h3><p data-i18n="svc4.d">تقييم عادل.</p></div>
-      <div class="service-card reveal"><div class="service-icon">🤝</div><h3 data-i18n="svc5.t">وساطة وتفاوض</h3><p data-i18n="svc5.d">تمثيلك في المفاوضات.</p></div>
-      <div class="service-card reveal"><div class="service-icon">🛠️</div><h3 data-i18n="svc6.t">دعم ما بعد البيع</h3><p data-i18n="svc6.d">مساعدة مستمرة.</p></div>
+      <a href="about.html" class="btn btn-outline">المزيد عنا</a>
     </div>
   </div>
 </section>
 
 <!-- FEATURED PROPERTIES -->
-<section class="section" id="featured">
+<section class="section section-alt" id="featured">
   <div class="container">
     <div class="section-head reveal">
-      <span class="eyebrow" data-i18n="feat.eyebrow">عقارات مميزة</span>
-      <h2 data-i18n="feat.title">أحدث العقارات والمشروعات</h2>
-      <p data-i18n="feat.sub">selection من الوحدات المتاحة.</p>
+      <span class="eyebrow">عقارات مميزة</span>
+      <h2>أحدث العقارات والمشروعات</h2>
+      <p>selection من الوحدات المتاحة في مدينة العبور.</p>
     </div>
     <div class="features-grid" id="featuredGrid" style="grid-template-columns: repeat(3,1fr);"></div>
-    <div style="text-align:center;margin-top:36px;">
-      <a href="properties.html" class="btn btn-outline" data-i18n="feat.viewall">عرض جميع العقارات</a>
+    <div style="text-align:center;margin-top:40px;">
+      <a href="properties.html" class="btn btn-outline">عرض جميع العقارات</a>
     </div>
   </div>
 </section>
 
-<!-- WHY US -->
-<section class="section section-alt" id="why">
+<!-- WHY -->
+<section class="section" id="why">
   <div class="container">
     <div class="section-head reveal">
-      <span class="eyebrow" data-i18n="why.eyebrow">لماذا نحن</span>
-      <h2 data-i18n="why.title">لماذا تختار Alpha House؟</h2>
+      <span class="eyebrow">لماذا نحن</span>
+      <h2>لماذا تختار Alpha House؟</h2>
     </div>
     <div class="why-grid">
       <div class="why-item reveal"><div class="why-num">01</div><h4>معرفة بالسوق</h4><p>خبرة في سوق مدينة العبور.</p></div>
@@ -132,30 +131,74 @@
   </div>
 </section>
 
-<!-- TESTIMONIALS -->
-<section class="section" id="testimonials">
+<!-- SERVICES -->
+<section class="section section-alt" id="services">
   <div class="container">
     <div class="section-head reveal">
-      <span class="eyebrow" data-i18n="test.eyebrow">آراء العملاء</span>
-      <h2 data-i18n="test.title">عملاء يثقون بنا</h2>
+      <span class="eyebrow">خدماتنا</span>
+      <h2>خدمات عقارية متكاملة</h2>
+      <p>نقدم حلولاً عقارية شاملة.</p>
+    </div>
+    <div class="services-grid">
+      <div class="service-card reveal"><div class="service-icon">🏠</div><h3>تسويق العقارات</h3><p>عرض وتسويق الوحدات السكنية والتجارية.</p></div>
+      <div class="service-card reveal"><div class="service-icon">💬</div><h3>استشارات عقارية</h3><p>نصائح مبنية على معرفة سوق العبور.</p></div>
+      <div class="service-card reveal"><div class="service-icon">🏗️</div><h3>إدارة المشروعات</h3><p>متابعة وإدارة المشروعات.</p></div>
+      <div class="service-card reveal"><div class="service-icon">📊</div><h3>تقييم العقارات</h3><p>تقييم عادل وموضوعي.</p></div>
+      <div class="service-card reveal"><div class="service-icon">🤝</div><h3>وساطة وتفاوض</h3><p>تمثيلك في المفاوضات.</p></div>
+      <div class="service-card reveal"><div class="service-icon">🛠️</div><h3>دعم ما بعد البيع</h3><p>مساعدة مستمرة بعد الإتمام.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- OFFICE LOCATION -->
+<section class="section" id="office">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="eyebrow">موقعنا</span>
+      <h2>زوروا مقر ALPHA HOUSE</h2>
+    </div>
+    <div class="office-card reveal">
+      <div>
+        <div class="office-icon">📍</div>
+        <div class="office-address">الحي التاسع، مدينة العبور، مصر</div>
+        <p style="margin-bottom:18px;">نحن هنا لخدمتكم. زورونا أو تواصلوا معنا لترتيب معاينة.</p>
+        <div class="office-actions">
+          <a href="https://www.google.com/maps/search/?api=1&query=Obour+City+9th+District" target="_blank" rel="noopener" class="btn btn-primary">فتح على Google Maps</a>
+          <a href="https://wa.me/201557222799" target="_blank" rel="noopener" class="btn btn-whatsapp" dir="ltr">WhatsApp</a>
+        </div>
+      </div>
+      <div style="text-align:center;opacity:0.6;">
+        <div style="font-size:6rem;">🏢</div>
+        <p style="font-size:0.9rem;">ALPHA HOUSE REAL ESTATE</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="section section-alt" id="testimonials">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="eyebrow">آراء العملاء</span>
+      <h2>عملاء يثقون بنا</h2>
     </div>
     <div class="testimonials-grid">
       <div class="testimonial-card reveal"><div class="quote-mark">"</div><p>تعامل احترافي وشفاف، ساعدوني في إيجاد شقة مناسبة بسرعة.</p><div class="author"><div class="avatar">AM</div><div><div class="author-name">أحمد M.</div><div class="author-role">مشتري</div></div></div></div>
       <div class="testimonial-card reveal"><div class="quote-mark">"</div><p>مستر محمد كان متعاونًا ومتجاوبًا طوال العملية.</p><div class="author"><div class="avatar">SK</div><div><div class="author-name">سارة K.</div><div class="author-role">مستثمرة</div></div></div></div>
-      <div class="testimonial-card reveal"><div class="quote-mark">"</div><p>خدمة ممتازة وتواصل سهل через WhatsApp.</p><div class="author"><div class="avatar">YH</div><div><div class="author-name">يوسف H.</div><div class="author-role">مشتري</div></div></div></div>
+      <div class="testimonial-card reveal"><div class="quote-mark">"</div><p>خدمة ممتازة وتواصل سهل عبر WhatsApp.</p><div class="author"><div class="avatar">YH</div><div><div class="author-name">يوسف H.</div><div class="author-role">مشتري</div></div></div></div>
     </div>
   </div>
 </section>
 
 <!-- CTA -->
-<section class="section section-alt" id="cta">
+<section class="section" id="cta">
   <div class="container" style="text-align:center;">
     <div class="reveal">
-      <h2 data-i18n="cta.title">هل أنت مستعد للعثور على عقارك؟</h2>
-      <p data-i18n="cta.sub" style="max-width:560px;margin:12px auto 28px;">تواصل معنا اليوم.</p>
+      <h2>هل أنت مستعد للعثور على عقارك؟</h2>
+      <p style="max-width:560px;margin:12px auto 28px;">تواصل معنا اليوم وسنساعدك على إيجاد الوحدة المناسبة.</p>
       <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
-        <a href="contact.html" class="btn btn-primary btn-lg" data-i18n="cta.btn1">طلب استشارة</a>
-        <a href="https://wa.me/201557222799" target="_blank" rel="noopener" class="btn btn-whatsapp btn-lg" data-i18n="cta.btn2" dir="ltr">WhatsApp</a>
+        <a href="contact.html" class="btn btn-primary btn-lg">طلب استشارة</a>
+        <a href="https://wa.me/201557222799" target="_blank" rel="noopener" class="btn btn-whatsapp btn-lg" dir="ltr">WhatsApp</a>
       </div>
     </div>
   </div>
@@ -167,7 +210,7 @@
     <div class="footer-grid">
       <div class="footer-brand">
         <a href="index.html" class="logo"><span class="logo-mark">A</span><span><span class="logo-text">Alpha House</span><span class="logo-sub">Real Estate</span></span></a>
-        <p data-i18n="footer.about">Alpha House Real Estate — شركة تسويق عقاري في مدينة العبور، مصر.</p>
+        <p>Alpha House Real Estate — شركة تسويق عقاري في مدينة العبور، مصر.</p>
         <div class="footer-contact">
           <a href="tel:+201557222799" dir="ltr">📞 01557222799</a>
           <a href="https://wa.me/201557222799" target="_blank" rel="noopener" dir="ltr">💬 WhatsApp</a>
@@ -175,26 +218,27 @@
         </div>
       </div>
       <div class="footer-col">
-        <h4 data-i18n="footer.quick">روابط سريعة</h4>
-        <a href="index.html" data-i18n="nav.home">الرئيسية</a>
-        <a href="about.html" data-i18n="nav.about">من نحن</a>
-        <a href="properties.html" data-i18n="nav.properties">العقارات</a>
-        <a href="services.html" data-i18n="nav.services">خدماتنا</a>
+        <h4>روابط سريعة</h4>
+        <a href="index.html">الرئيسية</a>
+        <a href="about.html">من نحن</a>
+        <a href="properties.html">العقارات</a>
+        <a href="services.html">خدماتنا</a>
       </div>
       <div class="footer-col">
-        <h4 data-i18n="nav.projects">المشروعات</h4>
+        <h4>المشروعات</h4>
         <a href="projects.html">المشروعات</a>
-        <a href="contact.html" data-i18n="nav.contact">تواصل معنا</a>
+        <a href="contact.html">تواصل معنا</a>
+        <a href="admin/login.html">لوحة التحكم</a>
       </div>
       <div class="footer-col">
-        <h4 data-i18n="footer.contact">تواصل</h4>
+        <h4>تواصل</h4>
         <a href="https://wa.me/201557222799" target="_blank" rel="noopener" dir="ltr">WhatsApp: 01557222799</a>
         <a href="tel:+201557222799" dir="ltr">هاتف: 01557222799</a>
-        <span style="color:var(--text-dim);font-size:0.85rem;">العبور – مصر</span>
+        <span style="color:var(--text-dim);font-size:0.85rem;">الحي التاسع، مدينة العبور – مصر</span>
       </div>
     </div>
     <div class="footer-bottom">
-      <span data-i18n="footer.rights">جميع الحقوق محفوظة © 2026 Alpha House Real Estate</span>
+      <span>جميع الحقوق محفوظة © 2026 Alpha House Real Estate</span>
       <div class="socials">
         <a href="https://wa.me/201557222799" target="_blank" rel="noopener" aria-label="WhatsApp" dir="ltr">W</a>
       </div>
@@ -206,17 +250,89 @@
   <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
 </a>
 
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-storage-compat.js"></script>
-<script src="js/config.js"></script>
-<script src="js/firebase.js"></script>
-<script src="js/data.js"></script>
-<script src="js/i18n.js"></script>
+<!-- Three.js for 3D Earth Globe -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+  // 3D Earth Globe
+  (function () {
+    const container = document.getElementById('heroCanvas');
+    if (!container || typeof THREE === 'undefined') return;
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(45, container.clientWidth / container.clientHeight, 0.1, 1000);
+    camera.position.z = 3.2;
+    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+    renderer.setSize(container.clientWidth, container.clientHeight);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    container.appendChild(renderer.domElement);
+
+    // starfield
+    const starGeo = new THREE.BufferGeometry();
+    const starCount = 1200;
+    const starPos = new Float32Array(starCount * 3);
+    for (let i = 0; i < starCount * 3; i++) starPos[i] = (Math.random() - 0.5) * 40;
+    starGeo.setAttribute('position', new THREE.BufferAttribute(starPos, 3));
+    const starMat = new THREE.PointsMaterial({ color: 0xc9a24b, size: 0.05, transparent: true, opacity: 0.8 });
+    const stars = new THREE.Points(starGeo, starMat);
+    scene.add(stars);
+
+    // earth
+    const earthGeo = new THREE.SphereGeometry(1, 64, 64);
+    const earthMat = new THREE.MeshPhongMaterial({
+      color: 0x1a1d26,
+      emissive: 0x0a0a0c,
+      specular: 0xc9a24b,
+      shininess: 18,
+      wireframe: false
+    });
+    const earth = new THREE.Mesh(earthGeo, earthMat);
+    scene.add(earth);
+
+    // golden wireframe overlay
+    const wireGeo = new THREE.SphereGeometry(1.005, 24, 24);
+    const wireMat = new THREE.MeshBasicMaterial({ color: 0xc9a24b, wireframe: true, transparent: true, opacity: 0.12 });
+    const wire = new THREE.Mesh(wireGeo, wireMat);
+    scene.add(wire);
+
+    // lights
+    const ambient = new THREE.AmbientLight(0xffffff, 0.15);
+    scene.add(ambient);
+    const point = new THREE.PointLight(0xc9a24b, 1.4, 100);
+    point.position.set(3, 2, 4);
+    scene.add(point);
+    const rim = new THREE.PointLight(0x22d3ee, 0.6, 100);
+    rim.position.set(-3, -2, -2);
+    scene.add(rim);
+
+    let mouseX = 0, mouseY = 0;
+    document.addEventListener('mousemove', (e) => {
+      mouseX = (e.clientX / window.innerWidth) * 2 - 1;
+      mouseY = (e.clientY / window.innerHeight) * 2 - 1;
+    });
+
+    function animate() {
+      requestAnimationFrame(animate);
+      earth.rotation.y += 0.0025;
+      wire.rotation.y += 0.0025;
+      stars.rotation.y += 0.0003;
+      // subtle mouse parallax
+      camera.position.x += (mouseX * 0.3 - camera.position.x) * 0.02;
+      camera.position.y += (-mouseY * 0.3 - camera.position.y) * 0.02;
+      camera.lookAt(0, 0, 0);
+      renderer.render(scene, camera);
+    }
+    animate();
+
+    window.addEventListener('resize', () => {
+      camera.aspect = container.clientWidth / container.clientHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(container.clientWidth, container.clientHeight);
+    });
+  })();
+</script>
+
 <script src="js/main.js"></script>
 <script>
-  // Render featured properties from Supabase
+  // Render featured properties
   (function(){
     const grid = document.getElementById('featuredGrid');
     if (!grid) return;
@@ -239,15 +355,20 @@
             <div class="property-img">
               <img src="${img}" alt="${name}" loading="lazy"/>
               <span class="property-badge">${unit || ''}</span>
+              ${p.status ? `<span class="property-status ${p.status==='sold'?'sold':p.status==='reserved'?'reserved':''}">${window.AH.statusLabel(p.status,L)}</span>` : ''}
             </div>
             <div class="property-body">
               <div class="property-area">${area || ''}</div>
               <h3 class="property-title">${name}</h3>
-              <div class="property-meta"><span>📐 ${p.size} m²</span></div>
+              <div class="property-meta">
+                <span>📐 ${p.size} m²</span>
+                ${p.rooms ? `<span>🛏 ${p.rooms}</span>` : ''}
+                ${p.bathrooms ? `<span>🛁 ${p.bathrooms}</span>` : ''}
+              </div>
               <div class="property-price">${priceStr}</div>
               <div class="property-actions">
-                <a class="btn btn-primary btn-sm" href="property.html?id=${p.id}">${L==='ar'?'التفاصيل':'Details'}</a>
-                <button class="btn btn-whatsapp btn-sm" data-wa-property="${name}">WhatsApp</button>
+                <a class="btn btn-primary btn-sm" href="property.html?id=${p.id}">التفاصيل</a>
+                <button class="btn btn-whatsapp btn-sm" data-wa-property="${name}" data-prop-id="${p.id}">WhatsApp</button>
               </div>
             </div>`;
           grid.appendChild(card);
@@ -256,14 +377,28 @@
           btn.addEventListener('click', e=>{
             e.preventDefault();
             const pname = btn.getAttribute('data-wa-property');
+            const pid = btn.getAttribute('data-prop-id');
+            const prop = props.find(x=>x.id===pid);
             const l = window.AH.getLang();
-            const text = l==='ar' ? "مرحبًا مستر محمد، أود الاستفسار عن: "+pname : "Hello Mr. Mohamed, I would like to inquire about: "+pname;
+            let text = l==='ar' ? 'مرحبًا ALPHA HOUSE،\nأرغب في طلب معاينة للعقار التالي:\n' : 'Hello ALPHA HOUSE,\nI would like to request a viewing for the following property:\n';
+            if (prop) {
+              text += (l==='ar'?'اسم العقار: ':'Property name: ') + (l==='ar'?prop.name_ar:prop.name_en) + '\n';
+              text += (l==='ar'?'المنطقة: ':'Area: ') + (l==='ar'?prop.area_ar:prop.area_en) + '\n';
+              text += (l==='ar'?'السعر: ':'Price: ') + (prop.price != null ? Number(prop.price).toLocaleString() + ' ' + (l==='ar'?'ج.م':'EGP') : '—') + '\n';
+              text += (l==='ar'?'المساحة: ':'Size: ') + prop.size + ' m²\n';
+            }
+            text += (l==='ar'?'رابط العقار: ':'Property link: ') + window.location.origin + window.location.pathname.replace('index.html','') + 'property.html?id=' + pid + '\n';
+            text += l==='ar' ? '\nأرغب في تحديد موعد للمعاينة ومعرفة التفاصيل المتاحة.\nشكرًا لكم.' : '\nI would like to schedule a viewing and get available details.\nThank you.';
             window.open(window.AH.WA+"?text="+encodeURIComponent(text),"_blank");
           });
         });
       } catch (e) { console.error(e); }
     }
-    load();
+    if (window.AH.isConfigured) load();
+    else {
+      // wait for config
+      const iv = setInterval(()=>{ if (window.AH.isConfigured){ clearInterval(iv); load(); } }, 500);
+    }
   })();
 </script>
 </body>
