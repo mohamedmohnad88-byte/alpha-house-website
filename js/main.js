@@ -159,4 +159,12 @@
     }, { rootMargin: '-40% 0px -55% 0px' });
     sections.forEach((s) => io.observe(s));
   }
+  // ============ CAREERS WA BUTTON ============
+  const careersBtn = document.getElementById('careersWaBtn');
+  if (careersBtn) {
+    careersBtn.addEventListener('click', () => {
+      const text = 'مرحبًا ALPHA HOUSE،\nأنا أبحث عن وظيفة في قسم المبيعات (Sales).\n\nالاسم: \nرقم الهاتف: \nالخبرة: \n\nأرغب في الانضمام إلى فريقكم. شكرًا.';
+      window.open(AH.WA + '?text=' + encodeURIComponent(text), '_blank');
+    });
+  }
 })();
