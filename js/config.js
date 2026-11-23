@@ -1,12 +1,11 @@
 // Firebase configuration (public values — safe to expose; protected by Security Rules).
-// Fill these from Firebase Console -> Project settings -> Your apps -> Web app.
 window.AH_FIREBASE_CONFIG = {
-  apiKey: "YOUR_API_KEY",
-  authDomain: "YOUR_PROJECT.firebaseapp.com",
-  projectId: "YOUR_PROJECT_ID",
-  storageBucket: "YOUR_PROJECT.appspot.com",
-  messagingSenderId: "YOUR_SENDER_ID",
-  appId: "YOUR_APP_ID"
+  apiKey: "AIzaSyAb-EYapIWWhwpG8j9zsbhUEg5ATdEDOmg",
+  authDomain: "alpha-house-39bef.firebaseapp.com",
+  projectId: "alpha-house-39bef",
+  storageBucket: "alpha-house-39bef.firebasestorage.app",
+  messagingSenderId: "246185180355",
+  appId: "1:246185180355:web:d993c2b6bba0807e6b7676"
 };
 
 window.AH = window.AH || {};
