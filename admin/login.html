@@ -34,21 +34,23 @@
         <p class="form-status" id="status"></p>
       </form>
       <p style="text-align:center;color:var(--text-dim);font-size:0.8rem;margin-top:16px;">
-        ملاحظة: يجب إعداد Supabase في js/config.js أولاً. ثم إنشاء حساب عبر Supabase Auth، وتعيين role='admin' в جدول profiles.
+        ملاحظة: يجب إعداد Firebase في js/config.js أولاً. ثم إنشاء حساب عبر Firebase Auth، وإضافة مستند في collection "users" بـ role='admin'.
       </p>
     </div>
   </div>
 
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
   <script src="../js/config.js"></script>
-  <script src="../js/supabase.js"></script>
+  <script src="../js/firebase.js"></script>
   <script>
     const form = document.getElementById('loginForm');
     const status = document.getElementById('status');
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
       if (!window.AH.isConfigured) {
-        status.textContent = 'Supabase غير مُعد. عدّل js/config.js.';
+        status.textContent = 'Firebase غير مُعد. عدّل js/config.js.';
         status.className = 'form-status error';
         return;
       }
@@ -56,21 +58,21 @@
       status.className = 'form-status';
       const email = document.getElementById('email').value.trim();
       const password = document.getElementById('password').value;
-      const { data, error } = await window.AH.sb.auth.signInWithPassword({ email, password });
-      if (error) {
-        status.textContent = error.message;
+      try {
+        const cred = await window.AH.firebase.auth.signInWithEmailAndPassword(email, password);
+        const uid = cred.user.uid;
+        const snap = await window.AH.fb.collection('users').doc(uid).get();
+        if (!snap.exists || snap.data().role !== 'admin') {
+          await window.AH.firebase.auth.signOut();
+          status.textContent = 'هذا الحساب ليس مديراً.';
+          status.className = 'form-status error';
+          return;
+        }
+        window.location.href = 'index.html';
+      } catch (err) {
+        status.textContent = err.message;
         status.className = 'form-status error';
-        return;
       }
-      // check admin role
-      const { data: prof } = await window.AH.sb.from('profiles').select('role').eq('id', data.user.id).maybeSingle();
-      if (!prof || prof.role !== 'admin') {
-        await window.AH.sb.auth.signOut();
-        status.textContent = 'هذا الحساب ليس مديراً.';
-        status.className = 'form-status error';
-        return;
-      }
-      window.location.href = 'index.html';
     });
   </script>
 </body>

@@ -1,0 +1,50 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isAdmin() {
+      return isSignedIn() &&
+        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';
+    }
+
+    // users: only self read; writes only via console/Admin SDK
+    match /users/{uid} {
+      allow read: if isSignedIn() && request.auth.uid == uid;
+      allow write: if false;
+    }
+
+    // properties: public reads published; admin full
+    match /properties/{id} {
+      allow read: if resource.data.is_published == true || isAdmin();
+      allow create, update, delete: if isAdmin();
+    }
+
+    // projects
+    match /projects/{id} {
+      allow read: if resource.data.is_published == true || isAdmin();
+      allow create, update, delete: if isAdmin();
+    }
+
+    // areas: public read
+    match /areas/{id} {
+      allow read: if true;
+      allow create, update, delete: if isAdmin();
+    }
+
+    // inquiries: anyone can create; only admin read/update/delete
+    match /inquiries/{id} {
+      allow create: if true;
+      allow read, update, delete: if isAdmin();
+    }
+
+    // settings: public read; admin write
+    match /settings/{key} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+  }
+}

@@ -1,27 +1,25 @@
 (function () {
   const AH = window.AH;
-  const container = document.getElementById('propertyDetail');
-  // property.html uses #propTitle etc; detect page by presence of galleryMain
   if (!document.getElementById('galleryMain')) return;
 
   const params = new URLSearchParams(window.location.search);
   const id = params.get('id');
   let p = null;
+  const db = AH.fb;
 
   function L() { return AH.getLang(); }
 
-  function statusLabel(s) { return AH.statusLabel(s, L()); }
-
   async function load() {
-    if (AH.sb && id) {
+    if (db && id) {
       try {
-        const { data, error } = await AH.sb.from('properties').select('*').eq('id', id).maybeSingle();
-        if (error) throw error;
-        p = data;
+        const snap = await db.collection('properties').doc(id).get();
+        if (snap.exists) {
+          const data = snap.data();
+          if (data.is_published === true) p = { id: snap.id, ...data };
+        }
       } catch (e) { console.error(e); }
     }
     if (!p) {
-      // not found / not configured
       const title = document.getElementById('propTitle');
       if (title) title.textContent = L() === 'ar' ? 'العقار غير موجود' : 'Property not found';
       return;
@@ -64,7 +62,7 @@
     if (price) price.textContent = p.price != null ? Number(p.price).toLocaleString() + ' ' + (lang === 'ar' ? 'ج.م' : 'EGP') : '—';
 
     const status = document.getElementById('propStatus');
-    if (status) { status.textContent = statusLabel(p.status); status.className = 'property-status ' + (p.status === 'sold' ? 'sold' : p.status === 'reserved' ? 'reserved' : ''); }
+    if (status) { status.textContent = AH.statusLabel(p.status, lang); status.className = 'property-status ' + (p.status === 'sold' ? 'sold' : p.status === 'reserved' ? 'reserved' : ''); }
 
     const specs = document.getElementById('propSpecs');
     if (specs) {
@@ -72,7 +70,7 @@
         <div class="spec"><div class="lbl">${t['detail.type'] || 'Type'}</div><div class="val">${lang === 'ar' ? p.unit_type_ar : p.unit_type_en}</div></div>
         <div class="spec"><div class="lbl">${t['detail.area'] || 'Area'}</div><div class="val">${lang === 'ar' ? p.area_ar : p.area_en}</div></div>
         <div class="spec"><div class="lbl">${t['detail.size'] || 'Size'}</div><div class="val">${p.size} m²</div></div>
-        <div class="spec"><div class="lbl">${t['detail.status'] || 'Status'}</div><div class="val">${statusLabel(p.status)}</div></div>
+        <div class="spec"><div class="lbl">${t['detail.status'] || 'Status'}</div><div class="val">${AH.statusLabel(p.status, lang)}</div></div>
       `;
     }
     const desc = document.getElementById('propDesc');
@@ -114,11 +112,16 @@
       text += (lang === 'ar' ? "العقار: " : "Property: ") + (data.get('property') || '') + "\n";
       if (data.get('date')) text += (lang === 'ar' ? "التاريخ المفضل: " : "Preferred date: ") + data.get('date') + "\n";
       window.open(AH.WA + "?text=" + encodeURIComponent(text), "_blank");
-      // also save inquiry if configured
-      if (AH.sb) {
-        AH.sb.from('inquiries').insert([{
-          name: data.get('name'), phone: data.get('phone'), property_id: id, type: 'viewing', message: data.get('date') ? 'Preferred date: ' + data.get('date') : null
-        }]).then(() => {}).catch(() => {});
+      if (AH.fb) {
+        AH.fb.collection('inquiries').add({
+          name: data.get('name') || null,
+          phone: data.get('phone') || null,
+          property_id: id,
+          type: 'viewing',
+          message: data.get('date') ? 'Preferred date: ' + data.get('date') : null,
+          status: 'new',
+          created_at: firebase.firestore.FieldValue.serverTimestamp()
+        }).catch(() => {});
       }
     });
   }

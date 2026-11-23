@@ -3,8 +3,9 @@
   const grid = document.getElementById('propertiesGrid');
   if (!grid) return;
 
-  const sb = AH.sb;
+  const db = AH.fb;
   let allProps = [];
+  let unsub = null;
 
   const typeSel = document.getElementById('filterType');
   const unitSel = document.getElementById('filterUnit');
@@ -49,7 +50,7 @@
     fillSelect(unitSel, unitTypes.filter(Boolean), allLabel);
     fillSelect(areaSel, areas.filter(Boolean), allLabel);
 
-    if (priceSel) {
+    if (priceSel && priceSel.options.length === 0) {
       priceSel.innerHTML = '';
       const all = document.createElement('option'); all.value = ''; all.textContent = allLabel; priceSel.appendChild(all);
       const ranges = [
@@ -64,7 +65,7 @@
         priceSel.appendChild(opt);
       });
     }
-    if (sizeSel) {
+    if (sizeSel && sizeSel.options.length === 0) {
       sizeSel.innerHTML = '';
       const all = document.createElement('option'); all.value = ''; all.textContent = allLabel; sizeSel.appendChild(all);
       const ranges = [
@@ -115,12 +116,12 @@
 
     if (!AH.isConfigured) {
       grid.innerHTML = '<div class="empty-state"><div class="icon">⚙️</div><p>' +
-        (lang === 'ar' ? 'لم يتم إعداد قاعدة البيانات بعد. يرجى ضبط js/config.js (Supabase).' : 'Database not configured yet. Please set up js/config.js (Supabase).') +
+        (lang === 'ar' ? 'لم يتم إعداد Firebase بعد. عدّل js/config.js.' : 'Firebase not configured. Please set up js/config.js.') +
         '</p></div>';
       return;
     }
     if (filtered.length === 0) {
-      grid.innerHTML = '<div class="empty-state"><div class="icon">🏠</div><p>' + (lang === 'ar' ? 'لا توجد نتائج. جرّب تعديل الفلاتر.' : 'No results. Try adjusting filters.') + '</p></div>';
+      grid.innerHTML = '<div class="empty-state"><div class="icon">🏠</div><p>' + (lang === 'ar' ? 'لا توجد نتائج.' : 'No results.') + '</p></div>';
       return;
     }
 
@@ -174,18 +175,14 @@
     });
   }
 
-  async function load() {
-    if (!sb) { allProps = []; render(); return; }
-    try {
-      const { data, error } = await sb.from('properties').select('*').eq('is_published', true).order('created_at', { ascending: false });
-      if (error) throw error;
-      allProps = data || [];
-    } catch (e) {
-      console.error(e);
-      allProps = [];
-    }
-    initFilters();
-    render();
+  function load() {
+    if (!db) { allProps = []; initFilters(); render(); return; }
+    if (unsub) unsub();
+    unsub = db.collection('properties').where('is_published', '==', true).onSnapshot((snap) => {
+      allProps = snap.docs.map((d) => ({ id: d.id, ...d.data() }));
+      initFilters();
+      render();
+    }, (err) => { console.error(err); allProps = []; render(); });
   }
 
   load();

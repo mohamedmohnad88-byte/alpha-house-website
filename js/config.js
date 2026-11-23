@@ -1,11 +1,14 @@
-// Supabase configuration.
-// Fill these values from your Supabase project (Settings -> API).
-// The anon key is safe to expose in the browser (protected by RLS).
-// NEVER put the service_role key here.
-window.AH_CONFIG = {
-  SUPABASE_URL: "https://YOUR-PROJECT.supabase.co",
-  SUPABASE_ANON_KEY: "YOUR-ANON-PUBLIC-KEY"
+// Firebase configuration (public values — safe to expose; protected by Security Rules).
+// Fill these from Firebase Console -> Project settings -> Your apps -> Web app.
+window.AH_FIREBASE_CONFIG = {
+  apiKey: "YOUR_API_KEY",
+  authDomain: "YOUR_PROJECT.firebaseapp.com",
+  projectId: "YOUR_PROJECT_ID",
+  storageBucket: "YOUR_PROJECT.appspot.com",
+  messagingSenderId: "YOUR_SENDER_ID",
+  appId: "YOUR_APP_ID"
 };
+
 window.AH = window.AH || {};
 window.AH.COMPANY = {
   name: "ALPHA HOUSE REAL ESTATE",

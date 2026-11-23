@@ -107,16 +107,18 @@
         status.textContent = lang === 'ar' ? "جاري فتح WhatsApp..." : "Opening WhatsApp...";
         status.className = "form-status success";
       }
-      // Save inquiry to database (if configured)
-      if (window.AH.sb) {
-        window.AH.sb.from('inquiries').insert([{
+      // Save inquiry to Firestore (if configured)
+      if (window.AH.fb) {
+        window.AH.fb.collection('inquiries').add({
           name: name || null,
           phone: phone || null,
           email: email || null,
           message: message || null,
           property_id: null,
-          type: form.getAttribute('data-inquiry-type') || 'general'
-        }]).then(() => {}).catch(() => {});
+          type: form.getAttribute('data-inquiry-type') || 'general',
+          status: 'new',
+          created_at: firebase.firestore.FieldValue.serverTimestamp()
+        }).catch(() => {});
       }
       window.open(buildWaMessage(text), "_blank");
     });
