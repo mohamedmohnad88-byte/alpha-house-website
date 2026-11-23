@@ -203,7 +203,10 @@
       allProps = snap.docs.map((d) => ({ id: d.id, ...d.data() }));
       initFilters();
       render();
-    }, (err) => { console.error(err); allProps = []; render(); });
+    }, (err) => {
+      console.error('[properties] onSnapshot error', err);
+      grid.innerHTML = '<div class="empty-state"><div class="icon">⚠️</div><p>' + (L()==='ar' ? 'خطأ في تحميل العقارات: ' + err.message : 'Error loading properties: ' + err.message) + '</p><button class="btn btn-ghost btn-sm" onclick="location.reload()" style="margin-top:12px;">إعادة تحميل</button></div>';
+    });
   }
 
   load();

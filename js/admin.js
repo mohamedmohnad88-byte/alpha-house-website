@@ -7,27 +7,46 @@
   // ============ AUTH GUARD ============
   async function guard() {
     if (!db || !auth) {
-      window.location.href = 'login.html';
+      const el = document.getElementById('propertiesTableWrap');
+      if (el) el.innerHTML = '<p class="form-status error">Firebase غير مُعد. تحقق من js/config.js.</p>';
       return false;
     }
     return new Promise((resolve) => {
       const unsub = auth.onAuthStateChanged(async (user) => {
         unsub();
-        if (!user) { window.location.href = 'login.html'; resolve(false); return; }
+        if (!user) {
+          window.location.href = 'login.html';
+          resolve(false);
+          return;
+        }
+        console.log('[admin] logged in as', user.uid, user.email);
         try {
           const snap = await db.collection('users').doc(user.uid).get();
-          if (!snap.exists || snap.data().role !== 'admin') {
+          if (!snap.exists) {
+            console.error('[admin] no users doc for', user.uid);
             await auth.signOut();
+            alert('هذا الحساب غير مسجل كمدير (لا يوجد users/' + user.uid + ').');
+            window.location.href = 'login.html';
+            resolve(false);
+            return;
+          }
+          const role = snap.data().role;
+          if (role !== 'admin') {
+            console.error('[admin] role is', role);
+            await auth.signOut();
+            alert('دور الحساب: ' + role + ' (ليس admin).');
             window.location.href = 'login.html';
             resolve(false);
             return;
           }
           const el = document.getElementById('adminEmail');
-          if (el) el.textContent = user.email;
+          if (el) el.textContent = user.email + ' (admin)';
+          console.log('[admin] guard OK');
           resolve(true);
         } catch (e) {
-          console.error(e);
-          window.location.href = 'login.html';
+          console.error('[admin] guard error', e);
+          const el = document.getElementById('propertiesTableWrap');
+          if (el) el.innerHTML = '<p class="form-status error">خطأ: ' + e.message + '</p>';
           resolve(false);
         }
       });
@@ -143,8 +162,13 @@
     const wrap = document.getElementById('propertiesTableWrap');
     wrap.innerHTML = '<p style="color:var(--text-muted);">جاري التحميل...</p>';
     if (propUnsub) propUnsub();
-    propUnsub = db.collection('properties').orderBy('created_at', 'desc').onSnapshot((snap) => {
+    propUnsub = db.collection('properties').onSnapshot((snap) => {
       allPropsCache = snap.docs.map((d) => ({ id: d.id, ...d.data() }));
+      allPropsCache.sort((a,b) => {
+        const ta = a.created_at && a.created_at.toDate ? a.created_at.toDate().getTime() : 0;
+        const tb = b.created_at && b.created_at.toDate ? b.created_at.toDate().getTime() : 0;
+        return tb - ta;
+      });
       if (allPropsCache.length === 0) {
         wrap.innerHTML = '<p style="color:var(--text-muted);">لا توجد عقارات.</p>';
         return;
@@ -197,7 +221,9 @@
         });
       });
     }, (err) => {
-      wrap.innerHTML = '<p class="form-status error">' + esc(err.message) + '</p>';
+      console.error('[admin] properties onSnapshot error', err);
+      wrap.innerHTML = '<p class="form-status error">خطأ في تحميل العقارات: ' + esc(err.message) + '</p>' +
+        '<button class="btn btn-ghost btn-sm" onclick="location.reload()" style="margin-top:10px;">إعادة تحميل</button>';
     });
   }
 
@@ -311,8 +337,13 @@
     const wrap = document.getElementById('projectsTableWrap');
     wrap.innerHTML = '<p style="color:var(--text-muted);">جاري التحميل...</p>';
     if (projUnsub) projUnsub();
-    projUnsub = db.collection('projects').orderBy('created_at', 'desc').onSnapshot((snap) => {
+    projUnsub = db.collection('projects').onSnapshot((snap) => {
       allProjectsCache = snap.docs.map((d) => ({ id: d.id, ...d.data() }));
+      allProjectsCache.sort((a,b) => {
+        const ta = a.created_at && a.created_at.toDate ? a.created_at.toDate().getTime() : 0;
+        const tb = b.created_at && b.created_at.toDate ? b.created_at.toDate().getTime() : 0;
+        return tb - ta;
+      });
       if (allProjectsCache.length === 0) {
         wrap.innerHTML = '<p style="color:var(--text-muted);">لا توجد مشروعات.</p>';
         return;
@@ -433,8 +464,13 @@
     const wrap = document.getElementById('areasTableWrap');
     wrap.innerHTML = '<p style="color:var(--text-muted);">جاري التحميل...</p>';
     if (areaUnsub) areaUnsub();
-    areaUnsub = db.collection('areas').orderBy('created_at', 'desc').onSnapshot((snap) => {
+    areaUnsub = db.collection('areas').onSnapshot((snap) => {
       allAreasCache = snap.docs.map((d) => ({ id: d.id, ...d.data() }));
+      allAreasCache.sort((a,b) => {
+        const ta = a.created_at && a.created_at.toDate ? a.created_at.toDate().getTime() : 0;
+        const tb = b.created_at && b.created_at.toDate ? b.created_at.toDate().getTime() : 0;
+        return tb - ta;
+      });
       if (allAreasCache.length === 0) {
         wrap.innerHTML = '<p style="color:var(--text-muted);">لا توجد مناطق.</p>';
         return;
@@ -516,8 +552,13 @@
     const wrap = document.getElementById('inquiriesTableWrap');
     wrap.innerHTML = '<p style="color:var(--text-muted);">جاري التحميل...</p>';
     if (inqUnsub) inqUnsub();
-    inqUnsub = db.collection('inquiries').orderBy('created_at', 'desc').onSnapshot((snap) => {
+    inqUnsub = db.collection('inquiries').onSnapshot((snap) => {
       const data = snap.docs.map((d) => ({ id: d.id, ...d.data() }));
+      data.sort((a,b) => {
+        const ta = a.created_at && a.created_at.toDate ? a.created_at.toDate().getTime() : 0;
+        const tb = b.created_at && b.created_at.toDate ? b.created_at.toDate().getTime() : 0;
+        return tb - ta;
+      });
       if (data.length === 0) {
         wrap.innerHTML = '<p style="color:var(--text-muted);">لا توجد طلبات.</p>';
         return;
