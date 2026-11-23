@@ -1,0 +1,10 @@
+{
+  "name": "alpha-house-real-estate",
+  "version": "1.0.0",
+  "description": "Alpha House Real Estate website + admin panel (Supabase).",
+  "scripts": {
+    "start": "python3 -m http.server 8080",
+    "dev": "python3 -m http.server 8080"
+  },
+  "license": "MIT"
+}

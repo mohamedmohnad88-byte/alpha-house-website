@@ -1,0 +1,206 @@
+(function () {
+  const AH = window.AH;
+  const grid = document.getElementById('propertiesGrid');
+  if (!grid) return;
+
+  const sb = AH.sb;
+  let allProps = [];
+
+  const typeSel = document.getElementById('filterType');
+  const unitSel = document.getElementById('filterUnit');
+  const areaSel = document.getElementById('filterArea');
+  const priceSel = document.getElementById('filterPrice');
+  const sizeSel = document.getElementById('filterSize');
+
+  function L() { return AH.getLang(); }
+
+  function fillSelect(sel, options, allLabel) {
+    if (!sel) return;
+    sel.innerHTML = '';
+    const all = document.createElement('option');
+    all.value = '';
+    all.textContent = allLabel;
+    sel.appendChild(all);
+    options.forEach((o) => {
+      const opt = document.createElement('option');
+      opt.value = o;
+      opt.textContent = o;
+      sel.appendChild(opt);
+    });
+  }
+
+  function initFilters() {
+    const lang = L();
+    const allLabel = (AH.translations[lang] || {})['properties.all'] || 'All';
+    const t = AH.translations[lang] || {};
+
+    if (typeSel) {
+      typeSel.innerHTML = '';
+      ['', 'residential', 'commercial'].forEach((v) => {
+        const opt = document.createElement('option');
+        opt.value = v;
+        opt.textContent = v === '' ? allLabel : (v === 'residential' ? (t['properties.residential'] || 'Residential') : (t['properties.commercial'] || 'Commercial'));
+        typeSel.appendChild(opt);
+      });
+    }
+
+    const unitTypes = [...new Set(allProps.map((p) => (lang === 'ar' ? p.unit_type_ar : p.unit_type_en)))];
+    const areas = [...new Set(allProps.map((p) => (lang === 'ar' ? p.area_ar : p.area_en)))];
+    fillSelect(unitSel, unitTypes.filter(Boolean), allLabel);
+    fillSelect(areaSel, areas.filter(Boolean), allLabel);
+
+    if (priceSel) {
+      priceSel.innerHTML = '';
+      const all = document.createElement('option'); all.value = ''; all.textContent = allLabel; priceSel.appendChild(all);
+      const ranges = [
+        { v: '0-2000000', ar: 'حتى 2,000,000', en: 'Up to 2,000,000' },
+        { v: '2000000-4000000', ar: '2,000,000 - 4,000,000', en: '2,000,000 - 4,000,000' },
+        { v: '4000000-999999999', ar: '4,000,000 فما فوق', en: '4,000,000+' }
+      ];
+      ranges.forEach((r) => {
+        const opt = document.createElement('option');
+        opt.value = r.v;
+        opt.textContent = lang === 'ar' ? r.ar : r.en;
+        priceSel.appendChild(opt);
+      });
+    }
+    if (sizeSel) {
+      sizeSel.innerHTML = '';
+      const all = document.createElement('option'); all.value = ''; all.textContent = allLabel; sizeSel.appendChild(all);
+      const ranges = [
+        { v: '0-150', ar: 'حتى 150 م²', en: 'Up to 150 m²' },
+        { v: '150-300', ar: '150 - 300 م²', en: '150 - 300 m²' },
+        { v: '300-999999', ar: '300 م² فما فوق', en: '300 m²+' }
+      ];
+      ranges.forEach((r) => {
+        const opt = document.createElement('option');
+        opt.value = r.v;
+        opt.textContent = lang === 'ar' ? r.ar : r.en;
+        sizeSel.appendChild(opt);
+      });
+    }
+  }
+
+  function statusClass(s) { if (s === 'sold') return 'sold'; if (s === 'reserved') return 'reserved'; return ''; }
+
+  function render() {
+    const lang = L();
+    const t = AH.translations[lang] || {};
+    const type = typeSel ? typeSel.value : '';
+    const unit = unitSel ? unitSel.value : '';
+    const area = areaSel ? areaSel.value : '';
+    const price = priceSel ? priceSel.value : '';
+    const size = sizeSel ? sizeSel.value : '';
+
+    let filtered = allProps.filter((p) => {
+      if (type && p.type !== type) return false;
+      const unitName = lang === 'ar' ? p.unit_type_ar : p.unit_type_en;
+      const areaName = lang === 'ar' ? p.area_ar : p.area_en;
+      if (unit && unitName !== unit) return false;
+      if (area && areaName !== area) return false;
+      if (price) {
+        const [mn, mx] = price.split('-').map(Number);
+        if ((p.price || 0) < mn || (p.price || 0) > mx) return false;
+      }
+      if (size) {
+        const [mn, mx] = size.split('-').map(Number);
+        if (p.size < mn || p.size > mx) return false;
+      }
+      return true;
+    });
+
+    grid.innerHTML = '';
+    const countEl = document.getElementById('resultCount');
+    if (countEl) countEl.textContent = filtered.length + ' ' + (t['properties.found'] || 'available');
+
+    if (!AH.isConfigured) {
+      grid.innerHTML = '<div class="empty-state"><div class="icon">⚙️</div><p>' +
+        (lang === 'ar' ? 'لم يتم إعداد قاعدة البيانات بعد. يرجى ضبط js/config.js (Supabase).' : 'Database not configured yet. Please set up js/config.js (Supabase).') +
+        '</p></div>';
+      return;
+    }
+    if (filtered.length === 0) {
+      grid.innerHTML = '<div class="empty-state"><div class="icon">🏠</div><p>' + (lang === 'ar' ? 'لا توجد نتائج. جرّب تعديل الفلاتر.' : 'No results. Try adjusting filters.') + '</p></div>';
+      return;
+    }
+
+    filtered.forEach((p) => {
+      const card = document.createElement('article');
+      card.className = 'property-card reveal';
+      const img = (p.images && p.images[0]) ? p.images[0] : 'assets/img/prop1.svg';
+      const unitName = lang === 'ar' ? p.unit_type_ar : p.unit_type_en;
+      const areaName = lang === 'ar' ? p.area_ar : p.area_en;
+      const name = lang === 'ar' ? p.name_ar : p.name_en;
+      const priceStr = p.price != null ? Number(p.price).toLocaleString() + ' ' + (lang === 'ar' ? 'ج.م' : 'EGP') : '—';
+      card.innerHTML = `
+        <div class="property-img">
+          <img src="${img}" alt="${name}" loading="lazy" />
+          <span class="property-badge">${unitName || ''}</span>
+          <span class="property-status ${statusClass(p.status)}">${AH.statusLabel(p.status, lang)}</span>
+        </div>
+        <div class="property-body">
+          <div class="property-area">${areaName || ''}</div>
+          <h3 class="property-title">${name}</h3>
+          <div class="property-meta">
+            <span>📐 ${p.size} m²</span>
+            <span>🏷️ ${p.type === 'residential' ? (t['properties.residential'] || 'Residential') : (t['properties.commercial'] || 'Commercial')}</span>
+          </div>
+          <div class="property-price">${priceStr}</div>
+          <div class="property-actions">
+            <a class="btn btn-primary btn-sm" href="property.html?id=${p.id}">${lang === 'ar' ? 'التفاصيل' : 'Details'}</a>
+            <button class="btn btn-whatsapp btn-sm" data-wa-property="${name}">WhatsApp</button>
+          </div>
+        </div>
+      `;
+      grid.appendChild(card);
+    });
+
+    grid.querySelectorAll('[data-wa-property]').forEach((btn) => {
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        const pname = btn.getAttribute('data-wa-property');
+        const text = L() === 'ar' ? "مرحبًا مستر محمد، أود الاستفسار عن: " + pname : "Hello Mr. Mohamed, I would like to inquire about: " + pname;
+        window.open(AH.WA + "?text=" + encodeURIComponent(text), "_blank");
+      });
+    });
+
+    grid.querySelectorAll('.reveal').forEach((el) => {
+      if ('IntersectionObserver' in window) {
+        const ro = new IntersectionObserver((entries) => {
+          entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('visible'); ro.unobserve(e.target); } });
+        }, { threshold: 0.1 });
+        ro.observe(el);
+      } else el.classList.add('visible');
+    });
+  }
+
+  async function load() {
+    if (!sb) { allProps = []; render(); return; }
+    try {
+      const { data, error } = await sb.from('properties').select('*').eq('is_published', true).order('created_at', { ascending: false });
+      if (error) throw error;
+      allProps = data || [];
+    } catch (e) {
+      console.error(e);
+      allProps = [];
+    }
+    initFilters();
+    render();
+  }
+
+  load();
+
+  [typeSel, unitSel, areaSel, priceSel, sizeSel].forEach((s) => { if (s) s.addEventListener('change', render); });
+  const resetBtn = document.getElementById('resetFilters');
+  if (resetBtn) resetBtn.addEventListener('click', () => {
+    [typeSel, unitSel, areaSel, priceSel, sizeSel].forEach((s) => { if (s) s.value = ''; });
+    render();
+  });
+
+  const origSetLang = AH.setLang;
+  AH.setLang = function (lang) {
+    origSetLang(lang);
+    initFilters();
+    render();
+  };
+})();

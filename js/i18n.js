@@ -1,0 +1,240 @@
+window.AH = window.AH || {};
+
+window.AH.translations = {
+  ar: {
+    "nav.home": "الرئيسية",
+    "nav.about": "من نحن",
+    "nav.properties": "العقارات",
+    "nav.projects": "المشروعات",
+    "nav.services": "خدماتنا",
+    "nav.contact": "تواصل معنا",
+    "nav.cta": "استفسار سريع",
+    "hero.eyebrow": "ALPHA HOUSE REAL ESTATE",
+    "hero.title": "منزل أحلامك في مدينة العبور يبدأ من هنا",
+    "hero.sub": "Alpha House Real Estate — شريكك العقاري الموثوق في مدينة العبور. نساعدك على إيجاد الوحدة السكنية أو التجارية المناسبة بسهولة واحترافية.",
+    "hero.cta1": "استكشف العقارات",
+    "hero.cta2": "تواصل مع مستر محمد",
+    "hero.stat1": "عقار معروض",
+    "hero.stat2": "منطقة في العبور",
+    "hero.stat3": "رضا العملاء",
+    "about.eyebrow": "من نحن",
+    "about.title": "خبرة ومعرفة بسوق مدينة العبور",
+    "about.p1": "Alpha House Real Estate شركة متخصصة في تسويق العقارات والمشروعات والوحدات السكنية والتجارية في مدينة العبور – مصر. نعمل على ربط العملاء بالفرص العقارية المناسبة من خلال تواصل شخصي واحترافي.",
+    "about.p2": "نُقدّر ثقة عملائنا، ولذلك نلتزم بالوضوح والشفافية في كل مرحلة، من الاستفسار الأولي حتى إتمام الصفقة.",
+    "about.li1": "عقارات سكنية وتجارية في مدينة العبور",
+    "about.li2": "تواصل مباشر مع مستر محمد (المسؤول (Mr. Mohamed))",
+    "about.li3": "استشارات عقارية مخصصة لاحتياجاتك",
+    "about.li4": "مرافقة كاملة من البحث حتى التسليم",
+    "services.eyebrow": "خدماتنا",
+    "services.title": "خدمات عقارية متكاملة",
+    "services.sub": "نقدم حلولاً عقارية شاملة تغطي كل احتياجاتك.",
+    "svc1.t": "تسويق العقارات",
+    "svc1.d": "عرض وتسويق الوحدات السكنية والتجارية بأفضل صورة لجذب المشترين الجادين.",
+    "svc2.t": "استشارات عقارية",
+    "svc2.d": "نصائح مبنية على معرفة سوق مدينة العبور لمساعدتك على اتخاذ قرار مدروس.",
+    "svc3.t": "إدارة المشروعات",
+    "svc3.d": "متابعة وإدارة المشروعات العقارية من التخطيط حتى التسليم.",
+    "svc4.t": "تقييم العقارات",
+    "svc4.d": "تقييم عادل وموضوعي للوحدات والمشروعات.",
+    "svc5.t": "وساطة وتفاوض",
+    "svc5.d": "تمثيلك في المفاوضات لضمان أفضل شروط.",
+    "svc6.t": "دعم ما بعد البيع",
+    "svc6.d": "مساعدة مستمرة بعد إتمام الصفقة.",
+    "why.eyebrow": "لماذا نحن",
+    "why.title": "لماذا تختار Alpha House؟",
+    "feat.eyebrow": "عقارات مميزة",
+    "feat.title": "أحدث العقارات والمشروعات",
+    "feat.sub": "selection من الوحدات المتاحة في مدينة العبور.",
+    "feat.viewall": "عرض جميع العقارات",
+    "test.eyebrow": "آراء العملاء",
+    "test.title": "عملاء يثقون بنا",
+    "cta.title": "هل أنت مستعد للعثور على عقارك؟",
+    "cta.sub": "تواصل معنا اليوم وسنساعدك على إيجاد الوحدة المناسبة.",
+    "cta.btn1": "طلب استشارة",
+    "cta.btn2": "WhatsApp",
+    "footer.about": "Alpha House Real Estate — شركة تسويق عقاري في مدينة العبور، مصر.",
+    "footer.quick": "روابط سريعة",
+    "footer.contact": "تواصل",
+    "footer.rights": "جميع الحقوق محفوظة © 2026 Alpha House Real Estate",
+    "properties.title": "العقارات",
+    "properties.sub": "تصفح الوحدات والمشروعات المتاحة في مدينة العبور.",
+    "properties.filter.type": "نوع العقار",
+    "properties.filter.unit": "نوع الوحدة",
+    "properties.filter.area": "المنطقة",
+    "properties.filter.price": "نطاق السعر",
+    "properties.filter.size": "المساحة",
+    "properties.all": "الكل",
+    "properties.residential": "سكني",
+    "properties.commercial": "تجاري",
+    "properties.reset": "إعادة تعيين",
+    "properties.found": "عقار متاح",
+    "properties.sample": "جميع البيانات والأسعار المعروضة تجريبية وقابلة للتعديل.",
+    "detail.inquiry": "استفسار عبر WhatsApp",
+    "detail.call": "اتصال مباشر",
+    "detail.viewing": "طلب معاينة",
+    "detail.specs": "تفاصيل العقار",
+    "detail.features": "المميزات",
+    "detail.desc": "الوصف",
+    "detail.status": "حالة التوفر",
+    "detail.size": "المساحة",
+    "detail.price": "السعر",
+    "detail.area": "المنطقة",
+    "detail.type": "نوع الوحدة",
+    "contact.title": "تواصل معنا",
+    "contact.sub": "نحن هنا للإجابة على استفساراتك.",
+    "contact.form.name": "الاسم",
+    "contact.form.phone": "رقم الهاتف",
+    "contact.form.email": "البريد الإلكتروني",
+    "contact.form.msg": "الرسالة",
+    "contact.form.submit": "إرسال",
+    "contact.form.viewing": "طلب معاينة",
+    "contact.form.consult": "طلب استشارة عقارية",
+    "contact.form.interest": "تسجيل اهتمام بعقار",
+    "contact.form.property": "العقار المطلوب",
+    "projects.title": "المشروعات",
+    "projects.sub": "مشروعات عقارية في مدينة العبور.",
+    "about.page.title": "من نحن",
+    "services.page.title": "خدماتنا",
+    "whatsapp.msg.default": "مرحبًا مستر محمد، أود الاستفسار عن العقارات في مدينة العبور.",
+    "status.available": "متاح",
+    "status.reserved": "محجوز",
+    "status.sold": "مباع"
+  },
+  en: {
+    "nav.home": "Home",
+    "nav.about": "About",
+    "nav.properties": "Properties",
+    "nav.projects": "Projects",
+    "nav.services": "Services",
+    "nav.contact": "Contact",
+    "nav.cta": "Quick Inquiry",
+    "hero.eyebrow": "ALPHA HOUSE REAL ESTATE",
+    "hero.title": "Your dream home in Obour City starts here",
+    "hero.sub": "Alpha House Real Estate — your trusted real estate partner in Obour City. We help you find the right residential or commercial unit with ease and professionalism.",
+    "hero.cta1": "Explore Properties",
+    "hero.cta2": "Contact Mr. Mohamed",
+    "hero.stat1": "Listed Properties",
+    "hero.stat2": "Obour Districts",
+    "hero.stat3": "Client Satisfaction",
+    "about.eyebrow": "About Us",
+    "about.title": "Knowledge of the Obour City market",
+    "about.p1": "Alpha House Real Estate specializes in marketing real estate, projects, residential and commercial units in Obour City, Egypt. We connect clients with the right opportunities through personal, professional communication.",
+    "about.p2": "We value our clients' trust, and commit to clarity and transparency at every stage, from first inquiry to closing.",
+    "about.li1": "Residential and commercial real estate in Obour City",
+    "about.li2": "Direct contact with Mr. Mohamed (responsible manager)",
+    "about.li3": "Tailored real estate consultations",
+    "about.li4": "Full support from search to handover",
+    "services.eyebrow": "Our Services",
+    "services.title": "Full real estate services",
+    "services.sub": "Comprehensive real estate solutions covering all your needs.",
+    "svc1.t": "Property Marketing",
+    "svc1.d": "Presenting and marketing residential and commercial units to attract serious buyers.",
+    "svc2.t": "Real Estate Consulting",
+    "svc2.d": "Advice based on knowledge of the Obour City market to help you decide wisely.",
+    "svc3.t": "Project Management",
+    "svc3.d": "Managing real estate projects from planning to handover.",
+    "svc4.t": "Property Valuation",
+    "svc4.d": "Fair and objective valuation of units and projects.",
+    "svc5.t": "Brokerage & Negotiation",
+    "svc5.d": "Representing you in negotiations for the best terms.",
+    "svc6.t": "After-Sales Support",
+    "svc6.d": "Ongoing assistance after closing.",
+    "why.eyebrow": "Why Us",
+    "why.title": "Why choose Alpha House?",
+    "feat.eyebrow": "Featured",
+    "feat.title": "Latest Properties & Projects",
+    "feat.sub": "A selection of available units in Obour City.",
+    "feat.viewall": "View all properties",
+    "test.eyebrow": "Client Reviews",
+    "test.title": "Clients who trust us",
+    "cta.title": "Ready to find your property?",
+    "cta.sub": "Contact us today and we'll help you find the right unit.",
+    "cta.btn1": "Request consultation",
+    "cta.btn2": "WhatsApp",
+    "footer.about": "Alpha House Real Estate — a real estate marketing company in Obour City, Egypt.",
+    "footer.quick": "Quick Links",
+    "footer.contact": "Contact",
+    "footer.rights": "All rights reserved © 2026 Alpha House Real Estate",
+    "properties.title": "Properties",
+    "properties.sub": "Browse available units and projects in Obour City.",
+    "properties.filter.type": "Property Type",
+    "properties.filter.unit": "Unit Type",
+    "properties.filter.area": "Area",
+    "properties.filter.price": "Price Range",
+    "properties.filter.size": "Size",
+    "properties.all": "All",
+    "properties.residential": "Residential",
+    "properties.commercial": "Commercial",
+    "properties.reset": "Reset",
+    "properties.found": "available",
+    "properties.sample": "All data and prices shown are sample/placeholder and editable.",
+    "detail.inquiry": "Inquiry via WhatsApp",
+    "detail.call": "Direct Call",
+    "detail.viewing": "Request Viewing",
+    "detail.specs": "Property Details",
+    "detail.features": "Features",
+    "detail.desc": "Description",
+    "detail.status": "Availability",
+    "detail.size": "Size",
+    "detail.price": "Price",
+    "detail.area": "Area",
+    "detail.type": "Unit Type",
+    "contact.title": "Contact Us",
+    "contact.sub": "We are here to answer your inquiries.",
+    "contact.form.name": "Name",
+    "contact.form.phone": "Phone",
+    "contact.form.email": "Email",
+    "contact.form.msg": "Message",
+    "contact.form.submit": "Send",
+    "contact.form.viewing": "Request Viewing",
+    "contact.form.consult": "Request Consultation",
+    "contact.form.interest": "Register Interest",
+    "contact.form.property": "Property of interest",
+    "projects.title": "Projects",
+    "projects.sub": "Real estate projects in Obour City.",
+    "about.page.title": "About Us",
+    "services.page.title": "Our Services",
+    "whatsapp.msg.default": "Hello Mr. Mohamed, I would like to inquire about properties in Obour City.",
+    "status.available": "Available",
+    "status.reserved": "Reserved",
+    "status.sold": "Sold"
+  }
+};
+
+window.AH.getLang = function () {
+  return localStorage.getItem("ah_lang") || "ar";
+};
+
+window.AH.setLang = function (lang) {
+  localStorage.setItem("ah_lang", lang);
+  applyLang(lang);
+};
+
+function applyLang(lang) {
+  document.documentElement.lang = lang;
+  document.documentElement.dir = lang === "ar" ? "rtl" : "ltr";
+  const dict = window.AH.translations[lang];
+  document.querySelectorAll("[data-i18n]").forEach((el) => {
+    const key = el.getAttribute("data-i18n");
+    if (dict[key] !== undefined) el.textContent = dict[key];
+  });
+  document.querySelectorAll("[data-i18n-html]").forEach((el) => {
+    const key = el.getAttribute("data-i18n-html");
+    if (dict[key] !== undefined) el.innerHTML = dict[key];
+  });
+  // placeholders
+  document.querySelectorAll("[data-i18n-placeholder]").forEach((el) => {
+    const key = el.getAttribute("data-i18n-placeholder");
+    if (dict[key] !== undefined) el.setAttribute("placeholder", dict[key]);
+  });
+  // lang toggle label
+  const btn = document.getElementById("langToggle");
+  if (btn) btn.textContent = lang === "ar" ? "EN" : "AR";
+}
+
+document.addEventListener("DOMContentLoaded", function () {
+  applyLang(window.AH.getLang());
+});
+
+// expose
+window.AH.applyLang = applyLang;

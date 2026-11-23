@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>لوحة التحكم — Alpha House Admin</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../css/variables.css" />
+  <link rel="stylesheet" href="../css/base.css" />
+  <link rel="stylesheet" href="../css/components.css" />
+  <link rel="stylesheet" href="../css/admin.css" />
+</head>
+<body class="admin-body">
+  <div class="admin-shell">
+    <aside class="admin-sidebar">
+      <div class="admin-logo">
+        <span class="logo-mark">A</span>
+        <span><span class="logo-text">Alpha House</span><span class="logo-sub">Admin</span></span>
+      </div>
+      <nav class="admin-nav">
+        <button class="admin-nav-btn active" data-tab="properties">العقارات</button>
+        <button class="admin-nav-btn" data-tab="projects">المشروعات</button>
+        <button class="admin-nav-btn" data-tab="areas">المناطق</button>
+        <button class="admin-nav-btn" data-tab="inquiries">طلبات العملاء</button>
+        <button class="admin-nav-btn" data-tab="settings">الإعدادات</button>
+      </nav>
+      <div style="margin-top:auto;padding:16px;">
+        <button class="btn btn-ghost btn-block" id="logoutBtn">تسجيل الخروج</button>
+      </div>
+    </aside>
+
+    <main class="admin-main">
+      <header class="admin-topbar">
+        <h1 id="tabTitle">العقارات</h1>
+        <span id="adminEmail" style="color:var(--text-muted);font-size:0.9rem;"></span>
+      </header>
+
+      <!-- PROPERTIES -->
+      <section class="admin-tab active" id="tab-properties">
+        <div class="admin-toolbar">
+          <h3>قائمة العقارات</h3>
+          <button class="btn btn-primary btn-sm" id="newPropertyBtn">+ عقار جديد</button>
+        </div>
+        <div id="propertiesTableWrap"></div>
+
+        <div class="admin-form-card" id="propertyFormCard" style="display:none;margin-top:24px;">
+          <h3 id="propertyFormTitle">عقار جديد</h3>
+          <form id="propertyForm">
+            <input type="hidden" name="id" />
+            <div class="form-grid">
+              <div class="form-group"><label>الاسم (AR)</label><input name="name_ar" required /></div>
+              <div class="form-group"><label>Name (EN)</label><input name="name_en" required /></div>
+              <div class="form-group">
+                <label>النوع</label>
+                <select name="type" required>
+                  <option value="residential">سكني</option>
+                  <option value="commercial">تجاري</option>
+                </select>
+              </div>
+              <div class="form-group"><label>نوع الوحدة (AR)</label><input name="unit_type_ar" required /></div>
+              <div class="form-group"><label>Unit Type (EN)</label><input name="unit_type_en" required /></div>
+              <div class="form-group"><label>المنطقة (AR)</label><input name="area_ar" /></div>
+              <div class="form-group"><label>Area (EN)</label><input name="area_en" /></div>
+              <div class="form-group"><label>المساحة (م²)</label><input type="number" name="size" required /></div>
+              <div class="form-group"><label>السعر</label><input type="number" name="price" /></div>
+              <div class="form-group">
+                <label>الحالة</label>
+                <select name="status">
+                  <option value="draft">مسودة</option>
+                  <option value="available">متاح</option>
+                  <option value="reserved">محجوز</option>
+                  <option value="sold">مباع</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label><input type="checkbox" name="is_published" /> منشور</label>
+              </div>
+              <div class="form-group">
+                <label><input type="checkbox" name="is_featured" /> مميز</label>
+              </div>
+            </div>
+            <div class="form-group"><label>الوصف (AR)</label><textarea name="description_ar" rows="3"></textarea></div>
+            <div class="form-group"><label>Description (EN)</label><textarea name="description_en" rows="3"></textarea></div>
+            <div class="form-group"><label>المميزات (AR) — كل عنصر في سطر</label><textarea name="features_ar" rows="4"></textarea></div>
+            <div class="form-group"><label>Features (EN) — one per line</label><textarea name="features_en" rows="4"></textarea></div>
+            <div class="form-group">
+              <label>صور العقار</label>
+              <input type="file" id="propertyImages" multiple accept="image/*" />
+              <div id="propertyImagesPreview" class="img-preview-row"></div>
+              <input type="hidden" name="images" />
+            </div>
+            <div style="display:flex;gap:10px;margin-top:12px;">
+              <button type="submit" class="btn btn-primary">حفظ</button>
+              <button type="button" class="btn btn-ghost" id="cancelPropertyBtn">إلغاء</button>
+            </div>
+            <p class="form-status" id="propertyStatus"></p>
+          </form>
+        </div>
+      </section>
+
+      <!-- PROJECTS -->
+      <section class="admin-tab" id="tab-projects">
+        <div class="admin-toolbar">
+          <h3>المشروعات</h3>
+          <button class="btn btn-primary btn-sm" id="newProjectBtn">+ مشروع جديد</button>
+        </div>
+        <div id="projectsTableWrap"></div>
+        <div class="admin-form-card" id="projectFormCard" style="display:none;margin-top:24px;">
+          <h3>مشروع</h3>
+          <form id="projectForm">
+            <input type="hidden" name="id" />
+            <div class="form-grid">
+              <div class="form-group"><label>الاسم (AR)</label><input name="name_ar" required /></div>
+              <div class="form-group"><label>Name (EN)</label><input name="name_en" required /></div>
+              <div class="form-group"><label>المنطقة (AR)</label><input name="area_ar" /></div>
+              <div class="form-group"><label>Area (EN)</label><input name="area_en" /></div>
+              <div class="form-group"><label><input type="checkbox" name="is_published" /> منشور</label></div>
+              <div class="form-group"><label><input type="checkbox" name="is_featured" /> مميز</label></div>
+            </div>
+            <div class="form-group"><label>الوصف (AR)</label><textarea name="description_ar" rows="3"></textarea></div>
+            <div class="form-group"><label>Description (EN)</label><textarea name="description_en" rows="3"></textarea></div>
+            <div class="form-group">
+              <label>صورة المشروع</label>
+              <input type="file" id="projectImage" accept="image/*" />
+              <div id="projectImagePreview" class="img-preview-row"></div>
+              <input type="hidden" name="image" />
+            </div>
+            <div style="display:flex;gap:10px;margin-top:12px;">
+              <button type="submit" class="btn btn-primary">حفظ</button>
+              <button type="button" class="btn btn-ghost" id="cancelProjectBtn">إلغاء</button>
+            </div>
+            <p class="form-status" id="projectStatus"></p>
+          </form>
+        </div>
+      </section>
+
+      <!-- AREAS -->
+      <section class="admin-tab" id="tab-areas">
+        <div class="admin-toolbar">
+          <h3>المناطق</h3>
+          <button class="btn btn-primary btn-sm" id="newAreaBtn">+ منطقة جديدة</button>
+        </div>
+        <div id="areasTableWrap"></div>
+        <div class="admin-form-card" id="areaFormCard" style="display:none;margin-top:24px;">
+          <form id="areaForm">
+            <input type="hidden" name="id" />
+            <div class="form-grid">
+              <div class="form-group"><label>الاسم (AR)</label><input name="name_ar" required /></div>
+              <div class="form-group"><label>Name (EN)</label><input name="name_en" required /></div>
+              <div class="form-group"><label>Slug</label><input name="slug" /></div>
+            </div>
+            <div style="display:flex;gap:10px;margin-top:12px;">
+              <button type="submit" class="btn btn-primary">حفظ</button>
+              <button type="button" class="btn btn-ghost" id="cancelAreaBtn">إلغاء</button>
+            </div>
+            <p class="form-status" id="areaStatus"></p>
+          </form>
+        </div>
+      </section>
+
+      <!-- INQUIRIES -->
+      <section class="admin-tab" id="tab-inquiries">
+        <div class="admin-toolbar"><h3>طلبات العملاء</h3></div>
+        <div id="inquiriesTableWrap"></div>
+      </section>
+
+      <!-- SETTINGS -->
+      <section class="admin-tab" id="tab-settings">
+        <div class="admin-toolbar"><h3>إعدادات الموقع</h3></div>
+        <div class="admin-form-card">
+          <p style="color:var(--text-muted);font-size:0.9rem;margin-bottom:12px;">بيانات الشركة (ثابتة):</p>
+          <p><strong>ALPHA HOUSE REAL ESTATE</strong></p>
+          <p>هاتف/واتساب: 01557222799</p>
+          <p>المنطقة: مدينة العبور، مصر</p>
+          <p style="color:var(--text-dim);font-size:0.8rem;margin-top:12px;">لتعديل these values, update js/config.js and sql/seed as needed. (Company info is intentionally fixed.)</p>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../js/config.js"></script>
+  <script src="../js/supabase.js"></script>
+  <script src="../js/admin.js"></script>
+</body>
+</html>
