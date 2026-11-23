@@ -1,8 +1,15 @@
 (function () {
-  const AH = window.AH;
+  const AH = window.AH || {};
   const auth = (AH.firebase && AH.firebase.auth) ? AH.firebase.auth : null;
-  const db = AH.fb;
+  const db = AH.fb || null;
   const storage = (AH.firebase && AH.firebase.storage) ? AH.firebase.storage : null;
+  if (!AH.statusLabel) {
+    AH.statusLabel = function (s, lang) {
+      const dict = { ar: { draft:'مسودة', available:'متاح', reserved:'محجوز', sold:'مباع', new:'جديد', contacted:'تم التواصل', closed:'مغلق' },
+                     en: { draft:'Draft', available:'Available', reserved:'Reserved', sold:'Sold', new:'New', contacted:'Contacted', closed:'Closed' } };
+      return (dict[lang] && dict[lang][s]) || s;
+    };
+  }
 
   function dbg(msg) {
     const el = document.getElementById('debugPanel');
