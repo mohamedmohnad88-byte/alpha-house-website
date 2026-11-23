@@ -3,6 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
   <title>لوحة التحكم — Alpha House Admin</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -189,6 +192,38 @@
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-storage-compat.js"></script>
   <script src="../js/config.js"></script>
   <script src="../js/firebase.js"></script>
-  <script src="../js/admin.js?v=3"></script>
+  <script src="../js/admin.js?v=5"></script>
+  <script>
+    // Fallback: if admin.js did not populate the table, try a direct fetch
+    setTimeout(function () {
+      var wrap = document.getElementById('propertiesTableWrap');
+      if (!wrap) return;
+      if (wrap.textContent.indexOf('جاري التحميل') === -1) return;
+      var dbg = document.getElementById('debugPanel');
+      if (dbg) dbg.textContent += 'FALLBACK: still loading, attempting direct fetch...\\n';
+      if (!window.AH || !window.AH.fb) {
+        wrap.innerHTML = '<p class="form-status error">Firebase غير مُعد (fb null).</p>';
+        return;
+      }
+      var db = window.AH.fb;
+      db.collection('properties').get().then(function (snap) {
+        if (snap.empty) {
+          wrap.innerHTML = '<p style="color:var(--text-muted);">لا توجد عقارات.</p>';
+          return;
+        }
+        var html = '<table class="admin-table"><thead><tr><th>الاسم</th><th>النوع</th><th>المساحة</th><th>السعر</th><th>الحالة</th><th>منشور</th><th>مميز</th><th>إجراءات</th></tr></thead><tbody>';
+        snap.forEach(function (d) {
+          var p = d.data();
+          html += '<tr><td>' + (p.name_ar||'') + '</td><td>' + (p.type||'') + '</td><td>' + (p.size||'') + '</td><td>' + (p.price!=null?Number(p.price).toLocaleString():'—') + '</td><td>' + (p.status||'') + '</td><td>' + (p.is_published?'✓':'—') + '</td><td>' + (p.is_featured?'★':'—') + '</td><td class="actions"><button class="btn btn-ghost btn-sm" onclick="if(confirm(\'حذف؟\')){firebase.firestore().collection(\'properties\').doc(\''+d.id+'\').delete().then(function(){location.reload();});}">حذف</button></td></tr>';
+        });
+        html += '</tbody></table>';
+        wrap.innerHTML = html;
+        if (dbg) dbg.textContent += 'FALLBACK: rendered ' + snap.size + ' rows.\\n';
+      }).catch(function (e) {
+        wrap.innerHTML = '<p class="form-status error">خطأ: ' + e.message + '</p>';
+        if (dbg) dbg.textContent += 'FALLBACK error: ' + e.message + '\\n';
+      });
+    }, 4000);
+  </script>
 </body>
 </html>

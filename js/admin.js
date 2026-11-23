@@ -704,7 +704,23 @@
   }
 
   // ============ INIT ============
+  // Safety timeout: if still loading after 8s, show diagnostic
+  const loadTimeout = setTimeout(() => {
+    const wrap = document.getElementById('propertiesTableWrap');
+    if (wrap && wrap.textContent.indexOf('جاري التحميل') !== -1) {
+      dbg('TIMEOUT: still loading after 8s');
+      wrap.innerHTML = '<p class="form-status error">انتهت مهلة التحميل. تحقق من Console/Debug panel.</p>' +
+        '<button class="btn btn-ghost btn-sm" onclick="location.reload()" style="margin-top:10px;">إعادة تحميل</button>';
+    }
+  }, 8000);
+
   guard().then((ok) => {
+    clearTimeout(loadTimeout);
+    dbg('guard result: ' + ok);
     if (ok) loadTab('properties');
+    else dbg('guard failed -> redirected or error above');
+  }).catch((e) => {
+    clearTimeout(loadTimeout);
+    dbg('guard threw: ' + (e && e.message ? e.message : e));
   });
 })();
