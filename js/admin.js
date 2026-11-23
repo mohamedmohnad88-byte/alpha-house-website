@@ -158,9 +158,80 @@
   let propUnsub = null;
   let allPropsCache = [];
 
+  function renderPropertiesTable(wrap) {
+    if (allPropsCache.length === 0) {
+      wrap.innerHTML = '<p style="color:var(--text-muted);">لا توجد عقارات. أضف عقاراً جديداً.</p>';
+      return;
+    }
+    let html = '<table class="admin-table"><thead><tr><th>الاسم</th><th>النوع</th><th>المساحة</th><th>السعر</th><th>الحالة</th><th>منشور</th><th>مميز</th><th>إجراءات</th></tr></thead><tbody>';
+    allPropsCache.forEach((p) => {
+      html += `<tr>
+        <td>${esc(p.name_ar)}</td>
+        <td>${esc(p.type)}</td>
+        <td>${p.size}</td>
+        <td>${p.price != null ? Number(p.price).toLocaleString() : '—'}</td>
+        <td><span class="badge-status">${AH.statusLabel(p.status, 'ar')}</span></td>
+        <td>${p.is_published ? '✓' : '—'}</td>
+        <td>${p.is_featured ? '★' : '—'}</td>
+        <td class="actions">
+          <button class="btn btn-ghost btn-sm" data-edit-prop="${p.id}">تعديل</button>
+          <button class="btn btn-ghost btn-sm" data-toggle-prop="${p.id}" data-published="${p.is_published}">${p.is_published ? 'إخفاء' : 'إظهار'}</button>
+          <button class="btn btn-ghost btn-sm" data-feature-prop="${p.id}" data-featured="${p.is_featured}">${p.is_featured ? 'إلغاء تمييز' : 'تمييز'}</button>
+          <button class="btn btn-ghost btn-sm" data-delete-prop="${p.id}" style="color:var(--danger);">حذف</button>
+        </td>
+      </tr>`;
+    });
+    html += '</tbody></table>';
+    wrap.innerHTML = html;
+
+    wrap.querySelectorAll('[data-edit-prop]').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const p = allPropsCache.find((x) => x.id === btn.dataset.editProp);
+        if (p) editProperty(p);
+      });
+    });
+    wrap.querySelectorAll('[data-toggle-prop]').forEach((btn) => {
+      btn.addEventListener('click', async () => {
+        const id = btn.dataset.toggleProp;
+        const cur = btn.dataset.published === 'true';
+        await db.collection('properties').doc(id).update({ is_published: !cur, updated_at: firebase.firestore.FieldValue.serverTimestamp() });
+      });
+    });
+    wrap.querySelectorAll('[data-feature-prop]').forEach((btn) => {
+      btn.addEventListener('click', async () => {
+        const id = btn.dataset.featureProp;
+        const cur = btn.dataset.featured === 'true';
+        await db.collection('properties').doc(id).update({ is_featured: !cur, updated_at: firebase.firestore.FieldValue.serverTimestamp() });
+      });
+    });
+    wrap.querySelectorAll('[data-delete-prop]').forEach((btn) => {
+      btn.addEventListener('click', async () => {
+        if (!confirm('حذف هذا العقار؟')) return;
+        await db.collection('properties').doc(btn.dataset.deleteProp).delete();
+      });
+    });
+  }
+
   async function loadProperties() {
     const wrap = document.getElementById('propertiesTableWrap');
     wrap.innerHTML = '<p style="color:var(--text-muted);">جاري التحميل...</p>';
+    console.log('[admin] loadProperties start');
+    try {
+      const snap = await db.collection('properties').get();
+      console.log('[admin] get() returned', snap.size, 'docs');
+      allPropsCache = snap.docs.map((d) => ({ id: d.id, ...d.data() }));
+      allPropsCache.sort((a,b) => {
+        const ta = a.created_at && a.created_at.toDate ? a.created_at.toDate().getTime() : 0;
+        const tb = b.created_at && b.created_at.toDate ? b.created_at.toDate().getTime() : 0;
+        return tb - ta;
+      });
+      renderPropertiesTable(wrap);
+    } catch (e) {
+      console.error('[admin] loadProperties error', e);
+      wrap.innerHTML = '<p class="form-status error">خطأ: ' + esc(e.message) + '</p>' +
+        '<button class="btn btn-ghost btn-sm" onclick="location.reload()" style="margin-top:10px;">إعادة تحميل</button>';
+      return;
+    }
     if (propUnsub) propUnsub();
     propUnsub = db.collection('properties').onSnapshot((snap) => {
       allPropsCache = snap.docs.map((d) => ({ id: d.id, ...d.data() }));
@@ -169,61 +240,9 @@
         const tb = b.created_at && b.created_at.toDate ? b.created_at.toDate().getTime() : 0;
         return tb - ta;
       });
-      if (allPropsCache.length === 0) {
-        wrap.innerHTML = '<p style="color:var(--text-muted);">لا توجد عقارات.</p>';
-        return;
-      }
-      let html = '<table class="admin-table"><thead><tr><th>الاسم</th><th>النوع</th><th>المساحة</th><th>السعر</th><th>الحالة</th><th>منشور</th><th>مميز</th><th>إجراءات</th></tr></thead><tbody>';
-      allPropsCache.forEach((p) => {
-        html += `<tr>
-          <td>${esc(p.name_ar)}</td>
-          <td>${esc(p.type)}</td>
-          <td>${p.size}</td>
-          <td>${p.price != null ? Number(p.price).toLocaleString() : '—'}</td>
-          <td><span class="badge-status">${AH.statusLabel(p.status, 'ar')}</span></td>
-          <td>${p.is_published ? '✓' : '—'}</td>
-          <td>${p.is_featured ? '★' : '—'}</td>
-          <td class="actions">
-            <button class="btn btn-ghost btn-sm" data-edit-prop="${p.id}">تعديل</button>
-            <button class="btn btn-ghost btn-sm" data-toggle-prop="${p.id}" data-published="${p.is_published}">${p.is_published ? 'إخفاء' : 'إظهار'}</button>
-            <button class="btn btn-ghost btn-sm" data-feature-prop="${p.id}" data-featured="${p.is_featured}">${p.is_featured ? 'إلغاء تمييز' : 'تمييز'}</button>
-            <button class="btn btn-ghost btn-sm" data-delete-prop="${p.id}" style="color:var(--danger);">حذف</button>
-          </td>
-        </tr>`;
-      });
-      html += '</tbody></table>';
-      wrap.innerHTML = html;
-
-      wrap.querySelectorAll('[data-edit-prop]').forEach((btn) => {
-        btn.addEventListener('click', () => {
-          const p = allPropsCache.find((x) => x.id === btn.dataset.editProp);
-          if (p) editProperty(p);
-        });
-      });
-      wrap.querySelectorAll('[data-toggle-prop]').forEach((btn) => {
-        btn.addEventListener('click', async () => {
-          const id = btn.dataset.toggleProp;
-          const cur = btn.dataset.published === 'true';
-          await db.collection('properties').doc(id).update({ is_published: !cur, updated_at: firebase.firestore.FieldValue.serverTimestamp() });
-        });
-      });
-      wrap.querySelectorAll('[data-feature-prop]').forEach((btn) => {
-        btn.addEventListener('click', async () => {
-          const id = btn.dataset.featureProp;
-          const cur = btn.dataset.featured === 'true';
-          await db.collection('properties').doc(id).update({ is_featured: !cur, updated_at: firebase.firestore.FieldValue.serverTimestamp() });
-        });
-      });
-      wrap.querySelectorAll('[data-delete-prop]').forEach((btn) => {
-        btn.addEventListener('click', async () => {
-          if (!confirm('حذف هذا العقار؟')) return;
-          await db.collection('properties').doc(btn.dataset.deleteProp).delete();
-        });
-      });
+      renderPropertiesTable(wrap);
     }, (err) => {
-      console.error('[admin] properties onSnapshot error', err);
-      wrap.innerHTML = '<p class="form-status error">خطأ في تحميل العقارات: ' + esc(err.message) + '</p>' +
-        '<button class="btn btn-ghost btn-sm" onclick="location.reload()" style="margin-top:10px;">إعادة تحميل</button>';
+      console.error('[admin] onSnapshot error', err);
     });
   }
 
@@ -336,6 +355,72 @@
   async function loadProjects() {
     const wrap = document.getElementById('projectsTableWrap');
     wrap.innerHTML = '<p style="color:var(--text-muted);">جاري التحميل...</p>';
+    try {
+      const snap = await db.collection('projects').get();
+      allProjectsCache = snap.docs.map((d) => ({ id: d.id, ...d.data() }));
+      allProjectsCache.sort((a,b) => {
+        const ta = a.created_at && a.created_at.toDate ? a.created_at.toDate().getTime() : 0;
+        const tb = b.created_at && b.created_at.toDate ? b.created_at.toDate().getTime() : 0;
+        return tb - ta;
+      });
+    } catch (e) {
+      wrap.innerHTML = '<p class="form-status error">خطأ: ' + esc(e.message) + '</p>';
+      return;
+    }
+    // render
+    if (allProjectsCache.length === 0) { wrap.innerHTML = '<p style="color:var(--text-muted);">لا توجد مشروعات.</p>'; }
+    else {
+      let html = '<table class="admin-table"><thead><tr><th>الاسم</th><th>المنطقة</th><th>منشور</th><th>مميز</th><th>إجراءات</th></tr></thead><tbody>';
+      allProjectsCache.forEach((p) => {
+        html += `<tr>
+          <td>${esc(p.name_ar)}</td>
+          <td>${esc(p.area_ar || '')}</td>
+          <td>${p.is_published ? '✓' : '—'}</td>
+          <td>${p.is_featured ? '★' : '—'}</td>
+          <td class="actions">
+            <button class="btn btn-ghost btn-sm" data-edit-proj="${p.id}">تعديل</button>
+            <button class="btn btn-ghost btn-sm" data-toggle-proj="${p.id}" data-published="${p.is_published}">${p.is_published ? 'إخفاء' : 'إظهار'}</button>
+            <button class="btn btn-ghost btn-sm" data-delete-proj="${p.id}" style="color:var(--danger);">حذف</button>
+          </td>
+        </tr>`;
+      });
+      html += '</tbody></table>';
+      wrap.innerHTML = html;
+      wrap.querySelectorAll('[data-edit-proj]').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          const p = allProjectsCache.find((x) => x.id === btn.dataset.editProj);
+          if (!p) return;
+          const form = document.getElementById('projectForm');
+          form.id.value = p.id;
+          form.name_ar.value = p.name_ar || '';
+          form.name_en.value = p.name_en || '';
+          form.area_ar.value = p.area_ar || '';
+          form.area_en.value = p.area_en || '';
+          form.description_ar.value = p.description_ar || '';
+          form.description_en.value = p.description_en || '';
+          form.is_published.checked = !!p.is_published;
+          form.is_featured.checked = !!p.is_featured;
+          form.image.value = p.image || '';
+          const prev = document.getElementById('projectImagePreview');
+          prev.innerHTML = '';
+          if (p.image) { const img = document.createElement('img'); img.src = p.image; prev.appendChild(img); }
+          document.getElementById('projectFormCard').style.display = 'block';
+        });
+      });
+      wrap.querySelectorAll('[data-toggle-proj]').forEach((btn) => {
+        btn.addEventListener('click', async () => {
+          const id = btn.dataset.toggleProj;
+          const cur = btn.dataset.published === 'true';
+          await db.collection('projects').doc(id).update({ is_published: !cur, updated_at: firebase.firestore.FieldValue.serverTimestamp() });
+        });
+      });
+      wrap.querySelectorAll('[data-delete-proj]').forEach((btn) => {
+        btn.addEventListener('click', async () => {
+          if (!confirm('حذف هذا المشروع؟')) return;
+          await db.collection('projects').doc(btn.dataset.deleteProj).delete();
+        });
+      });
+    }
     if (projUnsub) projUnsub();
     projUnsub = db.collection('projects').onSnapshot((snap) => {
       allProjectsCache = snap.docs.map((d) => ({ id: d.id, ...d.data() }));
@@ -344,6 +429,10 @@
         const tb = b.created_at && b.created_at.toDate ? b.created_at.toDate().getTime() : 0;
         return tb - ta;
       });
+      // re-render quickly
+      loadProjects();
+    }, (err) => { console.error('[admin] projects onSnapshot', err); });
+  }
       if (allProjectsCache.length === 0) {
         wrap.innerHTML = '<p style="color:var(--text-muted);">لا توجد مشروعات.</p>';
         return;
@@ -399,10 +488,6 @@
           await db.collection('projects').doc(btn.dataset.deleteProj).delete();
         });
       });
-    }, (err) => {
-      wrap.innerHTML = '<p class="form-status error">' + esc(err.message) + '</p>';
-    });
-  }
 
   document.getElementById('newProjectBtn').addEventListener('click', () => {
     document.getElementById('projectForm').reset();
