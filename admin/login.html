@@ -1,41 +1,40 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="en" dir="ltr">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>تسجيل الدخول — Alpha House Admin</title>
+  <title>THE VOID — Admin Login</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="../css/variables.css" />
-  <link rel="stylesheet" href="../css/base.css" />
-  <link rel="stylesheet" href="../css/components.css" />
-  <link rel="stylesheet" href="../css/admin.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../css/void.css" />
 </head>
-<body class="admin-body">
-  <div class="admin-login-wrap">
-    <div class="admin-login-card">
-      <div class="logo" style="justify-content:center;margin-bottom:24px;">
-        <span class="logo-mark">A</span>
-        <span><span class="logo-text">Alpha House</span><span class="logo-sub">Admin Panel</span></span>
+<body>
+  <canvas id="nebula"></canvas>
+  <div style="min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px;position:relative;z-index:1;">
+    <div class="v-card" style="max-width:420px;width:100%;">
+      <div style="text-align:center;margin-bottom:24px;">
+        <div style="font-family:var(--font-display);font-size:1.4rem;letter-spacing:0.25em;color:var(--v-silver-bright);">THE VOID</div>
+        <div class="v-mono" style="margin-top:4px;">Admin Access</div>
       </div>
-      <h2 style="text-align:center;margin-bottom:8px;">تسجيل الدخول</h2>
-      <p style="text-align:center;color:var(--text-muted);margin-bottom:24px;font-size:0.9rem;">لوحة إدارة Alpha House Real Estate</p>
+      <h2 style="text-align:center;margin-bottom:8px;">Sign In</h2>
+      <p style="text-align:center;color:var(--text-muted);margin-bottom:24px;font-size:0.9rem;">Authorized keepers only.</p>
       <form id="loginForm">
         <div class="form-group">
-          <label>البريد الإلكتروني</label>
-          <input type="email" id="email" required />
+          <label>Email</label>
+          <input type="email" id="email" class="v-input" required />
         </div>
-        <div class="form-group">
-          <label>كلمة المرور</label>
-          <input type="password" id="password" required />
+        <div class="form-group" style="margin-top:12px;">
+          <label>Password</label>
+          <input type="password" id="password" class="v-input" required />
         </div>
-        <button type="submit" class="btn btn-primary btn-block">دخول</button>
-        <p class="form-status" id="status"></p>
+        <button type="submit" class="v-btn v-btn-primary btn-block" style="width:100%;margin-top:20px;">Enter</button>
+        <p class="form-status" id="status" style="margin-top:12px;text-align:center;"></p>
       </form>
-      <p style="text-align:center;color:var(--text-dim);font-size:0.8rem;margin-top:16px;">
-        ملاحظة: يجب إعداد Firebase في js/config.js أولاً. ثم إنشاء حساب عبر Firebase Auth، وإضافة مستند في collection "users" بـ role='admin'.
+      <p style="text-align:center;color:var(--v-text-dim);font-size:0.75rem;margin-top:16px;">
+        Firebase must be configured in js/config.js. Create an admin user in Firebase Auth, then add a document in collection "users" with id = UID and field role = "admin".
       </p>
+      <p style="text-align:center;margin-top:12px;"><a href="../index.html" class="v-mono">← Return to The Void</a></p>
     </div>
   </div>
 
@@ -44,36 +43,33 @@
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
   <script src="../js/config.js"></script>
   <script src="../js/firebase.js"></script>
+  <script src="../js/void-core.js"></script>
   <script>
     const form = document.getElementById('loginForm');
     const status = document.getElementById('status');
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
-      if (!window.AH.isConfigured) {
-        status.textContent = 'Firebase غير مُعد. عدّل js/config.js.';
-        status.className = 'form-status error';
-        return;
-      }
-      status.textContent = 'جاري تسجيل الدخول...';
-      status.className = 'form-status';
+      if (!window.AH.isConfigured) { status.textContent = 'Firebase not configured.'; status.className='form-status error'; return; }
+      status.textContent = 'Authenticating...';
       const email = document.getElementById('email').value.trim();
       const password = document.getElementById('password').value;
       try {
         const cred = await window.AH.firebase.auth.signInWithEmailAndPassword(email, password);
-        const uid = cred.user.uid;
-        const snap = await window.AH.fb.collection('users').doc(uid).get();
-        if (!snap.exists || snap.data().role !== 'admin') {
+        const db = window.AH.fb;
+        const doc = await db.collection('users').doc(cred.user.uid).get();
+        if (!doc.exists || doc.data().role !== 'admin') {
           await window.AH.firebase.auth.signOut();
-          status.textContent = 'هذا الحساب ليس مديراً.';
+          status.textContent = 'Access denied: not an admin.';
           status.className = 'form-status error';
           return;
         }
-        window.location.href = 'index.html';
+        location.href = 'index.html';
       } catch (err) {
-        status.textContent = err.message;
+        status.textContent = err.message || 'Login failed.';
         status.className = 'form-status error';
       }
     });
+    if (!VOID.settings.reduceMotion) VOID.initNebula();
   </script>
 </body>
 </html>

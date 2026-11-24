@@ -1,0 +1,362 @@
+{
+  "version": 1,
+  "articles": [
+    {
+      "id": "a-awareness-01",
+      "title": "The Map Is Not the Territory: How Your Mind Builds Reality",
+      "category": "cognitive",
+      "stage": "awareness",
+      "summary": "Your brain does not record reality; it constructs a model of it. Understanding this construction is the first act of self-awareness.",
+      "body": "## The Constructed Self\n\nEvery experience you have is filtered before it reaches your awareness. Light hits the retina, sound vibrates the cochlea, and the brain assembles a coherent scene from fragments. What you call \"reality\" is already an interpretation.\n\nThis is not a flaw. It is a feature that kept humans alive. But it means your self-image, your fears, and your assumptions are also constructions — models built from past data, bias, and repetition.\n\n## Why This Matters\n\nIf you believe your thoughts are facts, you become their prisoner. If you see them as models, you gain a lever: you can question, test, and revise them. Self-awareness begins the moment you notice that you are not your thoughts — you are the one observing them.\n\n## Practice: The Observer Stance\n\n1. Sit quietly for five minutes.\n2. Notice a thought as it appears: \"I am anxious about tomorrow.\"\n3. Reframe: \"I notice the thought that I am anxious about tomorrow.\"\n4. Repeat. Do not argue with the thought. Simply label it.\n\nThis small shift — from being inside a thought to watching it — is the foundation of every later skill in THE VOID.\n\n> Your mind is not a window. It is a workshop. Learn what it builds.",
+      "exercises": [
+        "Observer Stance: 5 minutes daily for one week. Log what you notice.",
+        "List three beliefs you hold about yourself. Mark each as 'fact' or 'model'.",
+        "Ask a trusted friend how they would describe you. Compare with your own list."
+      ],
+      "references": [
+        {"title": "Cognitive Psychology", "author": "Ulric Neisser", "year": 1967, "url": "https://en.wikipedia.org/wiki/Cognitive_psychology", "type": "theory"},
+        {"title": "The Constructed Nature of Perception", "author": "American Psychological Association", "year": 2024, "url": "https://www.apa.org/topics", "type": "organization"},
+        {"title": "Self-Awareness", "author": "National Institute of Mental Health", "year": 2024, "url": "https://www.nimh.nih.gov/health/topics", "type": "organization"}
+      ],
+      "tags": ["awareness", "cognition", "self-image"],
+      "updated": "2026-11-24",
+      "status": "published"
+    },
+    {
+      "id": "a-awareness-02",
+      "title": "Patterns of Mind: Recognizing Your Recurring Thoughts",
+      "category": "cognitive",
+      "stage": "awareness",
+      "summary": "Most suffering is not from single events but from repeating mental loops. Learn to see the loop.",
+      "body": "## Loops, Not Events\n\nA single setback rarely breaks a person. What breaks them is the loop that follows: the replay, the prediction, the self-criticism, the replay again. These loops become invisible through repetition — they feel like \"just how I am.\"\n\n## The Three Loops\n\n- **Rumination**: replaying the past. \"Why did I say that?\"\n- **Anticipation**: rehearsing the future. \"What if it goes wrong?\"\n- **Self-evaluation**: judging the self. \"I am not enough.\"\n\nEach loop has a trigger, a body sensation, and a narrative. Awareness means catching the loop at the trigger, before the narrative takes over.\n\n## Practice: Loop Logging\n\nFor one week, carry a small notebook. Each time you notice a repeating thought, write: trigger, sensation, thought. Do not try to stop it. The goal is recognition, not control — control comes later.\n\n> You cannot change a pattern you have not yet seen.",
+      "exercises": [
+        "Loop Logging for 7 days.",
+        "Identify your most frequent loop. Name it.",
+        "When the loop appears, say aloud: 'This is the [name] loop.'"
+      ],
+      "references": [
+        {"title": "Rumination and Depression", "author": "Nolen-Hoeksema, S.", "year": 2000, "url": "https://doi.org/10.1037/0021-843X.109.3.504", "type": "research"},
+        {"title": "Mindfulness and Mental Health", "author": "NHS", "year": 2024, "url": "https://www.nhs.uk/mental-health/self-help/", "type": "organization"},
+        {"title": "Cognitive Behavioral Approaches", "author": "American Psychological Association", "year": 2024, "url": "https://www.apa.org/topics/cognitive-behavioral-therapy", "type": "organization"}
+      ],
+      "tags": ["rumination", "patterns", "awareness"],
+      "updated": "2026-11-24",
+      "status": "published"
+    },
+    {
+      "id": "a-biases-01",
+      "title": "Cognitive Biases: The Invisible Errors in Your Thinking",
+      "category": "biases",
+      "stage": "awareness",
+      "summary": "Human reasoning is not a calculator. It is a set of shortcuts that usually work — and sometimes fail predictably.",
+      "body": "## Heuristics and Their Cost\n\nDaniel Kahneman and Amos Tversky showed that people rely on mental shortcuts (heuristics) that produce systematic, predictable errors. These are not random mistakes; they are structural features of human cognition.\n\n## Key Biases\n\n- **Confirmation bias**: seeking evidence that supports what you already believe.\n- **Anchoring**: over-relying on the first piece of information received.\n- **Availability heuristic**: judging probability by how easily examples come to mind.\n- **Sunk cost fallacy**: continuing a course because of past investment.\n- **Dunning-Kruger effect**: overestimating competence in domains of low competence.\n\n## The Defense\n\nYou cannot eliminate biases. You can build habits that catch them: seek disconfirming evidence, consider the base rate, sleep on important decisions, and ask \"what would change my mind?\"\n\n> A mind that never changes its mind is not strong. It is stuck.",
+      "exercises": [
+        "Name one belief you hold strongly. List three pieces of evidence that could disprove it.",
+        "Before your next major decision, write down the first number/estimate that came to mind (anchor). Then deliberately seek an independent estimate.",
+        "Keep a 'bias log' for one week: note moments you caught yourself confirming rather than testing."
+      ],
+      "references": [
+        {"title": "Judgment under uncertainty: Heuristics and biases", "author": "Tversky, A., & Kahneman, D.", "year": 1974, "url": "https://doi.org/10.1126/science.185.4157.1124", "type": "research"},
+        {"title": "Thinking, Fast and Slow", "author": "Kahneman, D.", "year": 2011, "url": "https://en.wikipedia.org/wiki/Thinking,_Fast_and_Slow", "type": "book"},
+        {"title": "Cognitive Biases", "author": "American Psychological Association", "year": 2024, "url": "https://www.apa.org/topics", "type": "organization"}
+      ],
+      "tags": ["biases", "reasoning", "decision"],
+      "updated": "2026-11-24",
+      "status": "published"
+    },
+    {
+      "id": "a-critical-01",
+      "title": "Critical Thinking: How to Test a Claim",
+      "category": "critical",
+      "stage": "perception",
+      "summary": "Critical thinking is not cynicism. It is the discipline of asking 'how do we know?' and 'what would change this?'",
+      "body": "## The Core Question\n\nCritical thinking reduces to one question asked well: \"What is the evidence, and how strong is it?\" Everything else — logic, statistics, source evaluation — serves this question.\n\n## A Practical Framework\n\n1. **Clarify the claim.** What exactly is being asserted? In what terms?\n2. **Identify the evidence.** Data, authority, anecdote, or assertion?\n3. **Check the source.** Who funded it? What is their incentive?\n4. **Look for disconfirmation.** What would prove this wrong?\n5. **Consider alternatives.** What else could explain the same evidence?\n6. **Decide proportionally.** Match confidence to evidence strength.\n\n## Common Traps\n\n- Equating confidence with competence.\n- Treating a single study as settled truth.\n- Confusing correlation with causation.\n- Accepting authority outside its domain.\n\n## Practice\n\nPick a claim you encountered this week (news, social media, advice). Run it through the six steps. Write your conclusion and your confidence level (0-100%).\n\n> Doubt is not weakness. Doubt is the price of accuracy.",
+      "exercises": [
+        "Run one claim through the 6-step framework today.",
+        "Find one source you trust and one you distrust on the same topic. Compare their evidence.",
+        "Write your own 'epistemic humility' statement: what you currently believe and what would change it."
+      ],
+      "references": [
+        {"title": "Critical Thinking", "author": "Stanford Encyclopedia of Philosophy", "year": 2024, "url": "https://plato.stanford.edu/entries/critical-thinking/", "type": "philosophy"},
+        {"title": "Thinking, Fast and Slow", "author": "Kahneman, D.", "year": 2011, "url": "https://en.wikipedia.org/wiki/Thinking,_Fast_and_Slow", "type": "book"},
+        {"title": "Critical Thinking Resources", "author": "American Psychological Association", "year": 2024, "url": "https://www.apa.org/topics", "type": "organization"}
+      ],
+      "tags": ["critical-thinking", "evidence", "reasoning"],
+      "updated": "2026-11-24",
+      "status": "published"
+    },
+    {
+      "id": "a-ei-01",
+      "title": "Emotional Intelligence: The Skill Beneath All Other Skills",
+      "category": "ei",
+      "stage": "control",
+      "summary": "Emotional intelligence is not about being nice. It is about perceiving, using, understanding, and managing emotion — in yourself and others.",
+      "body": "## The Four Branches\n\nDaniel Goleman popularized the term, but the academic model by Mayer and Salovey defines four abilities:\n\n1. **Perceiving emotions** — recognizing feelings in faces, voices, and your own body.\n2. **Using emotions** — harnessing emotion to facilitate thought and creativity.\n3. **Understanding emotions** — knowing how emotions blend, transition, and cause each other.\n4. **Managing emotions** — regulating your own and influencing others' emotions appropriately.\n\n## Why It Matters\n\nIQ predicts task performance. EQ predicts relationship quality, leadership, and resilience. Most life outcomes that matter are social and emotional, not purely cognitive.\n\n## The Misconception\n\nEmotional intelligence is not suppression. It is not being agreeable. A person with high EQ can be angry, firm, and direct — but chooses when and how, rather than being chosen by the feeling.\n\n## Practice: The 90-Second Rule\n\nEmotions have a biochemical lifespan of roughly 90 seconds. After that, any continued emotional response is being re-triggered by thought. When you feel a surge, wait 90 seconds before acting. Observe. Then choose.\n\n> You are not your emotion. You are the one who notices it.",
+      "exercises": [
+        "For one day, name the emotion you feel three times (morning, midday, evening).",
+        "Practice the 90-second rule during one triggering event.",
+        "Ask someone close to you: 'How do I come across when stressed?' Listen without defending."
+      ],
+      "references": [
+        {"title": "Emotional Intelligence", "author": "Goleman, D.", "year": 1995, "url": "https://en.wikipedia.org/wiki/Emotional_Intelligence_(book)", "type": "book"},
+        {"title": "What Is Emotional Intelligence?", "author": "Mayer, J. D., & Salovey, P.", "year": 1997, "url": "https://doi.org/10.1017/CBO9780511527661.002", "type": "research"},
+        {"title": "Emotional Intelligence", "author": "American Psychological Association", "year": 2024, "url": "https://www.apa.org/topics/emotional-intelligence", "type": "organization"}
+      ],
+      "tags": ["emotions", "eq", "regulation"],
+      "updated": "2026-11-24",
+      "status": "published"
+    },
+    {
+      "id": "a-control-01",
+      "title": "Emotion Regulation: The Architecture of Self-Control",
+      "category": "ei",
+      "stage": "control",
+      "summary": "Self-control is not willpower. It is a set of strategies that change how emotions are generated and expressed.",
+      "body": "## Beyond Willpower\n\nThe old model said self-control is a muscle that depletes. Research (Gross, 1998, 2015) shows regulation is better understood as a process with stages: situation selection, situation modification, attentional deployment, cognitive change, and response modulation.\n\n## The Five Strategies\n\n1. **Situation selection**: avoid or seek environments that trigger emotions.\n2. **Situation modification**: change the situation to alter its emotional impact.\n3. **Attentional deployment**: redirect attention (distraction or concentration).\n4. **Cognitive change**: reappraise the meaning of the situation.\n5. **Response modulation**: suppress or modify the outward expression.\n\nReappraisal (step 4) is the most powerful and the most trainable. Suppression (step 5) is the least effective and the most costly.\n\n## Practice: Reappraisal\n\nTake a recent frustration. Write down the automatic interpretation. Then generate two alternative interpretations that are plausible. Notice how the emotion shifts with the interpretation.\n\n> You do not control what happens. You control what it means.",
+      "exercises": [
+        "Reappraisal exercise for one recent frustration.",
+        "Identify your default strategy (avoidance? suppression?). Name it.",
+        "Practice situation selection: remove one trigger from your environment this week."
+      ],
+      "references": [
+        {"title": "The emerging field of emotion regulation: An integrative review", "author": "Gross, J. J.", "year": 1998, "url": "https://doi.org/10.1037/1089-2680.2.3.271", "type": "research"},
+        {"title": "Emotion regulation: Current status and future prospects", "author": "Gross, J. J.", "year": 2015, "url": "https://doi.org/10.1080/1047840X.2014.940781", "type": "research"},
+        {"title": "Stress and Coping", "author": "American Psychological Association", "year": 2024, "url": "https://www.apa.org/topics/stress", "type": "organization"}
+      ],
+      "tags": ["regulation", "reappraisal", "self-control"],
+      "updated": "2026-11-24",
+      "status": "published"
+    },
+    {
+      "id": "a-behavioral-01",
+      "title": "Behavioral Psychology: How Habits Are Built and Broken",
+      "category": "behavioral",
+      "stage": "discipline",
+      "summary": "Behavior is not character. It is the output of cues, routines, and rewards — and it can be redesigned.",
+      "body": "## The Habit Loop\n\nCharles Duhigg's model, drawn from behavioral research, describes habits as loops: cue (trigger), routine (behavior), reward (reinforcement). The loop becomes automatic through repetition, freeing cognitive resources.\n\n## Why Habits Persist\n\nHabits persist because they deliver a reward, even when the reward is subtle (relief, identity, social belonging). To change a habit, you rarely eliminate the loop; you keep the cue and reward and replace the routine.\n\n## The Replacement Strategy\n\n1. Identify the cue (time, place, emotion, person, preceding action).\n2. Identify the reward (what craving is being satisfied?).\n3. Design a new routine that delivers the same reward.\n4. Repeat until the new loop dominates.\n\n## Practice: One Habit Audit\n\nChoose one habit you want to change. Map its cue, routine, and reward for one week before attempting change. Awareness of the loop precedes its redesign.\n\n> You are not your habits. You are the architect who can rebuild them.",
+      "exercises": [
+        "Map one habit's cue-routine-reward.",
+        "Design a replacement routine for the same cue and reward.",
+        "Track the new routine for 14 days; note lapses without judgment."
+      ],
+      "references": [
+        {"title": "The Power of Habit", "author": "Duhigg, C.", "year": 2012, "url": "https://en.wikipedia.org/wiki/The_Power_of_Habit", "type": "book"},
+        {"title": "Behavioral Psychology", "author": "American Psychological Association", "year": 2024, "url": "https://www.apa.org/topics/behavioral-health", "type": "organization"},
+        {"title": "Habit Formation", "author": "NHS", "year": 2024, "url": "https://www.nhs.uk/live-well/", "type": "organization"}
+      ],
+      "tags": ["habits", "behavior", "change"],
+      "updated": "2026-11-24",
+      "status": "published"
+    },
+    {
+      "id": "a-resilience-01",
+      "title": "Psychological Resilience: Bending Without Breaking",
+      "category": "resilience",
+      "stage": "discipline",
+      "summary": "Resilience is not toughness. It is the capacity to recover and adapt after adversity — and it is trainable.",
+      "body": "## Beyond Toughness\n\nResilience is often confused with stoicism or endurance. The APA defines it as the process of adapting well in the face of adversity, trauma, tragedy, threats, or significant sources of stress.\n\n## The Resilience Factors\n\nResearch identifies several contributors:\n- **Connection**: supportive relationships.\n- **Wellness**: sleep, movement, nutrition, mindfulness.\n- **Healthy thinking**: realistic optimism, meaning-making.\n- **Purpose**: goals and values that outlast a setback.\n\n## The Reframe\n\nResilient people are not those who avoid pain. They are those who interpret pain as information rather than identity. A setback becomes data: \"This happened. What does it teach?\"\n\n## Practice: The After-Action Review\n\nAfter any difficult event, write three lines:\n1. What happened (facts only).\n2. What I controlled and what I did not.\n3. One lesson and one next action.\n\n> Resilience is not the absence of falling. It is the speed of rising.",
+      "exercises": [
+        "After-Action Review for one recent setback.",
+        "List your three strongest supports (people, practices, values).",
+        "Identify one meaning you can extract from a past hardship."
+      ],
+      "references": [
+        {"title": "Building Your Resilience", "author": "American Psychological Association", "year": 2024, "url": "https://www.apa.org/topics/resilience", "type": "organization"},
+        {"title": "Psychological Resilience", "author": "American Psychological Association", "year": 2024, "url": "https://www.apa.org/topics/resilience", "type": "organization"},
+        {"title": "Mental Health and Resilience", "author": "World Health Organization", "year": 2024, "url": "https://www.who.int/health-topics/mental-health", "type": "organization"}
+      ],
+      "tags": ["resilience", "recovery", "adaptation"],
+      "updated": "2026-11-24",
+      "status": "published"
+    },
+    {
+      "id": "a-assertiveness-01",
+      "title": "Assertiveness: Standing Your Ground Without Losing Respect",
+      "category": "assertiveness",
+      "stage": "mastery",
+      "summary": "Assertiveness is the middle path between passivity and aggression — clear, respectful, and firm.",
+      "body": "## The Three Styles\n\n- **Passive**: your needs are unspoken; resentment builds.\n- **Aggressive**: your needs dominate; relationships erode.\n- **Assertive**: your needs are stated clearly, with respect for the other.\n\nAssertiveness is a skill, not a personality trait. It can be learned at any age.\n\n## The Formula: DESC\n\n- **D**escribe the situation (facts, no judgment).\n- **E**xpress your feeling or concern.\n- **S**pecify what you want.\n- **C**onsequences: state the positive outcome or the boundary.\n\nExample: \"When meetings start late (D), I feel frustrated (E). I need us to start on time (S). That way we respect everyone's schedule (C).\"\n\n## Common Blocks\n\nFear of conflict, fear of rejection, and the belief that asking is selfish. These are learned, and they can be unlearned through practice.\n\n## Practice: Low-Stakes Reps\n\nStart with small assertions: returning a wrong order, asking for a deadline extension, saying no to a minor request. Build the muscle before high-stakes moments.\n\n> Respect begins with self-respect. You teach others how to treat you.",
+      "exercises": [
+        "Use the DESC formula once this week in a low-stakes situation.",
+        "Practice saying 'no' to one request you would normally accept.",
+        "Write a script for a conversation you have been avoiding."
+      ],
+      "references": [
+        {"title": "Assertiveness Training", "author": "American Psychological Association", "year": 2024, "url": "https://www.apa.org/topics", "type": "organization"},
+        {"title": "Communication and Mental Health", "author": "NHS", "year": 2024, "url": "https://www.nhs.uk/mental-health/", "type": "organization"},
+        {"title": "Nonviolent Communication", "author": "Rosenberg, M. B.", "year": 2003, "url": "https://en.wikipedia.org/wiki/Nonviolent_Communication", "type": "book"}
+      ],
+      "tags": ["assertiveness", "communication", "boundaries"],
+      "updated": "2026-11-24",
+      "status": "published"
+    },
+    {
+      "id": "a-social-01",
+      "title": "Social Psychology: Why People Do What They Do in Groups",
+      "category": "social",
+      "stage": "perception",
+      "summary": "Individuals in groups behave differently than individuals alone. Understanding group dynamics protects you from manipulation and improves collaboration.",
+      "body": "## The Group Effect\n\nSocial psychology studies how thoughts, feelings, and behaviors are influenced by the presence of others. Classic findings:\n\n- **Conformity** (Asch): people agree with a group even when the group is wrong.\n- **Obedience** (Milgram): ordinary people comply with authority against their conscience.\n- **Bystander effect**: responsibility diffuses in crowds; help is less likely.\n- **Social proof**: we use others' behavior as evidence of correctness.\n\n## Why This Is Not Cynicism\n\nUnderstanding influence is not the same as distrusting people. It is recognizing that context shapes behavior — including yours. This awareness lets you design better environments and resist manipulation.\n\n## Practical Defenses\n\n- Pause before following a crowd. Ask: would I do this alone?\n- In emergencies, point at one person and give a specific instruction: \"You in the red jacket — call an ambulance.\"\n- Notice authority appeals. Ask whether the authority is relevant to the claim.\n\n> You are not immune to influence. You are only more or less aware of it.",
+      "exercises": [
+        "Recall one time you conformed to a group. What was the cost?",
+        "In your next meeting, be the first to state an unpopular view.",
+        "Observe one social-proof tactic in advertising today and name it."
+      ],
+      "references": [
+        {"title": "Social Psychology", "author": "American Psychological Association", "year": 2024, "url": "https://www.apa.org/topics/social-psychology", "type": "organization"},
+        {"title": "Conformity and Group Influence", "author": "Asch, S. E.", "year": 1951, "url": "https://en.wikipedia.org/wiki/Asch_conformity_experiments", "type": "research"},
+        {"title": "Influence: The Psychology of Persuasion", "author": "Cialdini, R. B.", "year": 2006, "url": "https://en.wikipedia.org/wiki/Influence:_The_Psychology_of_Persuasion", "type": "book"}
+      ],
+      "tags": ["social", "influence", "groups"],
+      "updated": "2026-11-24",
+      "status": "published"
+    },
+    {
+      "id": "a-human-01",
+      "title": "Human Behavior: The Layers Beneath Action",
+      "category": "human",
+      "stage": "perception",
+      "summary": "Behavior is the visible tip. Beneath it lie needs, beliefs, and contexts. Read the layers, not just the act.",
+      "body": "## The Iceberg Model\n\nWhat you see — a harsh word, a withdrawal, a burst of energy — is the tip. Beneath the waterline: emotions, unmet needs, beliefs, and history. Reacting to the tip rarely changes the iceberg.\n\n## Needs as Drivers\n\nHuman behavior is need-driven. The same action (working late) can serve different needs: achievement, security, avoidance, belonging. You cannot understand a behavior until you know which need it serves.\n\n## The Interpretive Discipline\n\nWhen someone acts in a way that confuses or hurts you:\n1. Describe the behavior (facts).\n2. Generate three possible underlying needs.\n3. Test gently, rather than assume.\n4. Respond to the need, not the act.\n\nThis does not mean excusing harm. It means responding effectively rather than reactively.\n\n## Self-Application\n\nThe same layers apply to you. When you procrastinate, overeat, or snap — ask: what need is this serving? Curiosity beats self-criticism.\n\n> Behavior is a signal. Listen before you judge.",
+      "exercises": [
+        "For one difficult interaction this week, generate three possible underlying needs.",
+        "Identify one of your own recurring behaviors and the need it serves.",
+        "Practice responding to a need rather than an act in one conversation."
+      ],
+      "references": [
+        {"title": "Nonviolent Communication", "author": "Rosenberg, M. B.", "year": 2003, "url": "https://en.wikipedia.org/wiki/Nonviolent_Communication", "type": "book"},
+        {"title": "Human Behavior", "author": "American Psychological Association", "year": 2024, "url": "https://www.apa.org/topics", "type": "organization"},
+        {"title": "Mental Health", "author": "World Health Organization", "year": 2024, "url": "https://www.who.int/health-topics/mental-health", "type": "organization"}
+      ],
+      "tags": ["behavior", "needs", "empathy"],
+      "updated": "2026-11-24",
+      "status": "published"
+    },
+    {
+      "id": "a-decision-01",
+      "title": "Decision Making Under Uncertainty",
+      "category": "decision",
+      "stage": "discipline",
+      "summary": "Good decisions are not about predicting the future. They are about structuring choices so that even wrong ones are recoverable.",
+      "body": "## The Myth of the Right Choice\n\nWe imagine decisions as forks where one path is correct. In reality, most decisions are made with incomplete information, and the outcome depends partly on luck. The goal is not to be right; it is to decide well.\n\n## A Decision Framework\n\n1. **Define the decision.** What are you actually choosing between?\n2. **Identify what matters.** List criteria and weight them.\n3. **Gather information proportionally.** Spend effort proportional to stakes and reversibility.\n4. **Consider reversibility.** Reversible decisions should be made fast; irreversible ones slowly.\n5. **Decide and commit.** Half-commitments waste more than wrong commitments.\n6. **Review later.** Separate decision quality from outcome quality.\n\n## The Two Traps\n\n- **Analysis paralysis**: over-gathering for reversible choices.\n- **Outcome bias**: judging a decision by its result rather than its process.\n\n## Practice: The Pre-Mortem\n\nBefore a major decision, imagine it has failed one year from now. Write the story of why. This surfaces risks that optimism hides.\n\n> Decide like a scientist: form a hypothesis, act, and learn.",
+      "exercises": [
+        "Classify your next three decisions as reversible or irreversible.",
+        "Run a pre-mortem on one upcoming decision.",
+        "Review one past decision: was it a bad decision or a bad outcome?"
+      ],
+      "references": [
+        {"title": "Thinking, Fast and Slow", "author": "Kahneman, D.", "year": 2011, "url": "https://en.wikipedia.org/wiki/Thinking,_Fast_and_Slow", "type": "book"},
+        {"title": "Decisive: How to Make Better Choices", "author": "Heath, C., & Heath, D.", "year": 2013, "url": "https://en.wikipedia.org/wiki/Decisive_(book)", "type": "book"},
+        {"title": "Decision Making", "author": "American Psychological Association", "year": 2024, "url": "https://www.apa.org/topics", "type": "organization"}
+      ],
+      "tags": ["decision", "uncertainty", "framework"],
+      "updated": "2026-11-24",
+      "status": "published"
+    },
+    {
+      "id": "a-stoic-01",
+      "title": "Stoic Philosophy: The Discipline of the Inner Citadel",
+      "category": "stoic",
+      "stage": "mastery",
+      "summary": "Stoicism is not coldness. It is the practice of distinguishing what is in your control from what is not — and acting only on the former.",
+      "body": "## The Core Distinction\n\nEpictetus opens the Enchiridion with the foundational claim: some things are up to us (judgment, desire, aversion) and some are not (body, property, reputation, office). Suffering arises when we treat the second group as if it were the first.\n\n## The Three Disciplines (Epictetus)\n\n1. **Desire and aversion**: want only what is in your control.\n2. **Action**: act with reservation — aim at the virtuous act, not the outcome.\n3. **Assent**: examine impressions before accepting them. \"Is this true? Is it in my control?\"\n\n## The Stoic Virtues\n\nWisdom, courage, justice, temperance. These are not rules but orientations — ways of being that make any circumstance workable.\n\n## Practice: The View from Above\n\nWhen overwhelmed, imagine viewing your situation from a great height — city, country, planet. Notice how the problem shrinks without disappearing. This is not dismissal; it is proportion.\n\n> You have power over your mind, not outside events. Realize this, and you will find strength. — Marcus Aurelius",
+      "exercises": [
+        "List five things troubling you. Mark each 'in my control' or 'not'.",
+        "Practice the View from Above for one stressor.",
+        "Read one Stoic passage each morning for a week and note one application."
+      ],
+      "references": [
+        {"title": "Stoicism", "author": "Stanford Encyclopedia of Philosophy", "year": 2024, "url": "https://plato.stanford.edu/entries/stoicism/", "type": "philosophy"},
+        {"title": "Enchiridion", "author": "Epictetus", "year": 125, "url": "https://en.wikipedia.org/wiki/Enchiridion_of_Epictetus", "type": "philosophy"},
+        {"title": "Meditations", "author": "Marcus Aurelius", "year": 180, "url": "https://en.wikipedia.org/wiki/Meditations", "type": "philosophy"}
+      ],
+      "tags": ["stoicism", "control", "philosophy"],
+      "updated": "2026-11-24",
+      "status": "published"
+    },
+    {
+      "id": "a-stoic-02",
+      "title": "Stoicism in Practice: Morning and Evening Review",
+      "category": "stoic",
+      "stage": "mastery",
+      "summary": "Stoicism is a daily practice, not a theory. Two short rituals — morning and evening — anchor it.",
+      "body": "## Morning: Premeditation\n\nSeneca and Marcus Aurelius both practiced a morning review: anticipate the day's challenges, remind yourself of what is in your control, and set an intention. \"Today I will meet ingratitude, arrogance, betrayal...\" — and then choose how to respond.\n\n## Evening: Review\n\nAt night, review the day's actions. Ask:\n- What did I do well?\n- Where did I fall short?\n- What will I do differently tomorrow?\n\nThis is not self-punishment. It is calibration. The goal is steady improvement, not perfection.\n\n## The Integration\n\nCombined, these rituals take under ten minutes and produce a compounding effect: each day is slightly more intentional than the last. Over a year, that is transformation.\n\n> Waste no more time arguing about what a good person should be. Be one. — Marcus Aurelius",
+      "exercises": [
+        "Practice the morning premeditation for 7 days.",
+        "Practice the evening review for 7 days.",
+        "Combine both for 30 days and note changes in reactivity."
+      ],
+      "references": [
+        {"title": "Moral Letters to Lucilius", "author": "Seneca", "year": 65, "url": "https://en.wikipedia.org/wiki/Epistulae_Morales_ad_Lucilium", "type": "philosophy"},
+        {"title": "Meditations", "author": "Marcus Aurelius", "year": 180, "url": "https://en.wikipedia.org/wiki/Meditations", "type": "philosophy"},
+        {"title": "Stoicism", "author": "Stanford Encyclopedia of Philosophy", "year": 2024, "url": "https://plato.stanford.edu/entries/stoicism/", "type": "philosophy"}
+      ],
+      "tags": ["stoicism", "practice", "ritual"],
+      "updated": "2026-11-24",
+      "status": "published"
+    },
+    {
+      "id": "a-resilience-02",
+      "title": "Growth Mindset: The Belief That Shapes Ability",
+      "category": "resilience",
+      "stage": "discipline",
+      "summary": "Ability is not fixed. The belief that it can grow changes how you respond to failure — and that changes outcomes.",
+      "body": "## Fixed vs. Growth\n\nCarol Dweck's research distinguishes two mindsets:\n- **Fixed**: ability is static. Failure is a verdict.\n- **Growth**: ability is developable. Failure is feedback.\n\nThe mindset is not about effort alone; it is about how you interpret difficulty. A growth mindset treats struggle as the mechanism of improvement.\n\n## The Evidence\n\nDweck's studies show that praising intelligence (\"you're smart\") produces fragile performance, while praising process (\"you worked hard\") produces persistence. The words we use shape the beliefs we hold.\n\n## Practice: Reframe\n\nCatch fixed-mindset self-talk: \"I can't do this.\" Reframe: \"I can't do this yet.\" The word \"yet\" is small and transformative.\n\n> The view you adopt for yourself profoundly affects the way you lead your life. — Carol Dweck",
+      "exercises": [
+        "Catch and reframe one fixed-mindset thought per day for a week.",
+        "Replace 'I am bad at X' with 'I am learning X'.",
+        "Praise process, not outcome, in one interaction with someone else."
+      ],
+      "references": [
+        {"title": "Mindset: The New Psychology of Success", "author": "Dweck, C. S.", "year": 2006, "url": "https://en.wikipedia.org/wiki/Mindset_(book)", "type": "book"},
+        {"title": "Self-Theories", "author": "Dweck, C. S.", "year": 1999, "url": "https://doi.org/10.4324/9781315783061", "type": "research"},
+        {"title": "Resilience", "author": "American Psychological Association", "year": 2024, "url": "https://www.apa.org/topics/resilience", "type": "organization"}
+      ],
+      "tags": ["mindset", "growth", "learning"],
+      "updated": "2026-11-24",
+      "status": "published"
+    },
+    {
+      "id": "a-control-02",
+      "title": "The 90-Second Emotion: Why Feelings Pass If You Let Them",
+      "category": "ei",
+      "stage": "control",
+      "summary": "Emotions have a biochemical lifespan. After 90 seconds, continued feeling is a choice reinforced by thought.",
+      "body": "## The Biology\n\nNeuroanatomist Jill Bolte Taylor describes the 90-second rule: when a trigger occurs, the body releases stress hormones that flush through the bloodstream in about 90 seconds. After that, any continued emotional response is being re-stimulated by your thinking.\n\n## The Implication\n\nYou are not responsible for the first 90 seconds. You are responsible for what happens after. The loop of rumination re-triggers the chemistry, extending the emotion indefinitely.\n\n## Practice\n\nWhen you feel a surge:\n1. Notice it without naming it yet.\n2. Breathe and wait 90 seconds without acting or ruminating.\n3. After 90 seconds, name the emotion and decide.\n\nThis is not suppression. It is creating space between stimulus and response — the space Viktor Frankl called human freedom.\n\n> Between stimulus and response there is a space. In that space is our power to choose. — Viktor Frankl",
+      "exercises": [
+        "Apply the 90-second rule to one triggering event this week.",
+        "Notice the difference between the initial surge and the sustained emotion.",
+        "Combine with reappraisal: after 90 seconds, generate two alternative interpretations."
+      ],
+      "references": [
+        {"title": "My Stroke of Insight", "author": "Taylor, J. B.", "year": 2006, "url": "https://en.wikipedia.org/wiki/My_Stroke_of_Insight", "type": "book"},
+        {"title": "Man's Search for Meaning", "author": "Frankl, V. E.", "year": 1946, "url": "https://en.wikipedia.org/wiki/Man%27s_Search_for_Meaning", "type": "book"},
+        {"title": "Stress", "author": "American Psychological Association", "year": 2024, "url": "https://www.apa.org/topics/stress", "type": "organization"}
+      ],
+      "tags": ["emotion", "regulation", "neuroscience"],
+      "updated": "2026-11-24",
+      "status": "published"
+    },
+    {
+      "id": "a-social-02",
+      "title": "Emotional Contagion: How Feelings Spread Between People",
+      "category": "social",
+      "stage": "perception",
+      "summary": "Emotions are contagious. Understanding contagion helps you protect your state and influence others ethically.",
+      "body": "## The Mechanism\n\nHumans unconsciously mimic the facial expressions, postures, and vocal tones of those around them. This mimicry produces corresponding emotions — a process called emotional contagion. You catch feelings the way you catch a cold.\n\n## The Implications\n\n- Your emotional state affects everyone near you.\n- You are affected by the states of those you spend time with.\n- Chronic exposure to negative states shapes baseline mood.\n\n## Boundaries, Not Walls\n\nYou cannot (and should not) isolate yourself. But you can:\n- Notice when you are absorbing another's state.\n- Name it: \"This anxiety is not mine.\"\n- Choose your exposure consciously.\n- Regulate first, then engage.\n\n## Practice: State Check\n\nBefore entering a social situation, note your emotional state (1-10). Afterward, note it again. If it shifted sharply, contagion likely occurred. Reflect on whether the shift was wanted.\n\n> You are the average of the five people you spend the most time with — including their emotional states.",
+      "exercises": [
+        "State check before and after three social interactions.",
+        "Identify one relationship that consistently drains you. Plan a boundary.",
+        "Deliberately bring a calm state into one stressful group setting."
+      ],
+      "references": [
+        {"title": "Emotional Contagion", "author": "Hatfield, E., Cacioppo, J. T., & Rapson, R. L.", "year": 1994, "url": "https://en.wikipedia.org/wiki/Emotional_contagion", "type": "research"},
+        {"title": "Social Psychology", "author": "American Psychological Association", "year": 2024, "url": "https://www.apa.org/topics/social-psychology", "type": "organization"},
+        {"title": "Mental Wellbeing", "author": "NHS", "year": 2024, "url": "https://www.nhs.uk/mental-health/self-help/", "type": "organization"}
+      ],
+      "tags": ["contagion", "social", "boundaries"],
+      "updated": "2026-11-24",
+      "status": "published"
+    }
+  ]
+}
