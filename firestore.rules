@@ -46,19 +46,5 @@ service cloud.firestore {
       allow read: if true;
       allow write: if isAdmin();
     }
-
-    // THE VOID collections
-    match /void_articles/{id} {
-      allow read: if resource.data.status == 'published' || isAdmin();
-      allow create, update, delete: if isAdmin();
-    }
-    match /void_tips/{id} {
-      allow read: if true;
-      allow create, update, delete: if isAdmin();
-    }
-    match /void_categories/{id} {
-      allow read: if true;
-      allow create, update, delete: if isAdmin();
-    }
   }
 }
