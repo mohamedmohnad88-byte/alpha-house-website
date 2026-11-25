@@ -41,7 +41,7 @@
           if (!snap.exists) {
             dbg('no users doc for ' + user.uid);
             await auth.signOut();
-            alert('هذا الحساب غير مسجل كمدير (لا يوجد users/' + user.uid + ').');
+            alert('هذا الحساب غير مسجل كمدير.\n\nالإصلاح:\n1. Firebase Console → Firestore → collection "users"\n2. أنشئ document ID = ' + user.uid + '\n3. field: role = "admin"\n\nأو افتح admin/login.html للاطلاع على التعليمات.');
             window.location.href = 'login.html';
             resolve(false);
             return;

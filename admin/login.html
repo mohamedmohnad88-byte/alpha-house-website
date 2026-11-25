@@ -33,9 +33,13 @@
         <button type="submit" class="btn btn-primary btn-block">دخول</button>
         <p class="form-status" id="status"></p>
       </form>
-      <p style="text-align:center;color:var(--text-dim);font-size:0.8rem;margin-top:16px;">
-        ملاحظة: يجب إعداد Firebase في js/config.js أولاً. ثم إنشاء حساب عبر Firebase Auth، وإضافة مستند في collection "users" بـ role='admin'.
-      </p>
+      <div style="margin-top:16px;padding:12px;background:rgba(138,79,255,0.08);border:1px solid var(--v-border-strong,rgba(201,201,212,0.28));border-radius:8px;font-size:0.78rem;color:var(--text-muted);">
+        <strong style="color:var(--text);">إعداد Firebase (مرة واحدة):</strong><br/>
+        1. Firebase Console → Authentication → Users → Add user (email + password)<br/>
+        2. انسخ UID → Firestore → collection "users" → document ID = UID → field: role = "admin"<br/>
+        3. Firestore → Rules → الصق firestore.rules → Publish<br/>
+        4. (اختياري) Storage → Rules → الصق storage.rules → Publish
+      </div>
     </div>
   </div>
 
