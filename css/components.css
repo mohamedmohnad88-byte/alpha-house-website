@@ -1,3 +1,63 @@
+/* ============ ENHANCED EFFECTS ============ */
+/* Hero animated gradient mesh */
+.hero {
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 20% 30%, rgba(201,162,75,0.12) 0%, transparent 40%),
+    radial-gradient(circle at 80% 70%, rgba(201,162,75,0.08) 0%, transparent 45%),
+    radial-gradient(circle at 50% 50%, rgba(201,162,75,0.05) 0%, transparent 60%);
+  animation: heroMesh 12s ease-in-out infinite alternate;
+  pointer-events: none;
+  z-index: 0;
+}
+@keyframes heroMesh {
+  0% { transform: scale(1) translate(0, 0); opacity: 0.8; }
+  50% { transform: scale(1.1) translate(2%, -2%); opacity: 1; }
+  100% { transform: scale(1) translate(-2%, 2%); opacity: 0.8; }
+}
+.hero > * { position: relative; z-index: 1; }
+
+/* Enhanced card hover */
+.card {
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.4s, box-shadow 0.4s;
+}
+.card:hover {
+  transform: translateY(-10px) scale(1.01);
+  box-shadow: 0 30px 70px -20px rgba(201,162,75,0.25), 0 0 0 1px rgba(201,162,75,0.3);
+}
+
+/* Button press feedback */
+.btn:active { transform: translateY(1px) scale(0.98); }
+
+/* Property card image zoom */
+.property-img img {
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.property-card:hover .property-img img {
+  transform: scale(1.08);
+}
+
+/* Gold glow on focus */
+.btn-primary:focus-visible, .btn-outline:focus-visible {
+  box-shadow: 0 0 0 3px rgba(201,162,75,0.4), 0 10px 30px -8px rgba(201,162,75,0.5);
+}
+
+/* Smooth section reveal */
+.section { position: relative; }
+.section::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(201,162,75,0.15), transparent);
+}
+
 /* ============ NAVBAR ============ */
 .navbar {
   position: fixed;
