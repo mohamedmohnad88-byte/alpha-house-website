@@ -23,58 +23,32 @@
       <p style="text-align:center;color:var(--text-muted);margin-bottom:24px;font-size:0.9rem;">لوحة إدارة Alpha House Real Estate</p>
       <form id="loginForm">
         <div class="form-group">
-          <label>البريد الإلكتروني</label>
-          <input type="email" id="email" required />
-        </div>
-        <div class="form-group">
-          <label>كلمة المرور</label>
-          <input type="password" id="password" required />
+          <label>كلمة المرور (Admin)</label>
+          <input type="password" id="password" required placeholder="أدخل كلمة المرور" />
         </div>
         <button type="submit" class="btn btn-primary btn-block">دخول</button>
         <p class="form-status" id="status"></p>
       </form>
-      <div style="margin-top:16px;padding:12px;background:rgba(138,79,255,0.08);border:1px solid var(--v-border-strong,rgba(201,201,212,0.28));border-radius:8px;font-size:0.78rem;color:var(--text-muted);">
-        <strong style="color:var(--text);">إعداد Firebase (مرة واحدة):</strong><br/>
-        1. Firebase Console → Authentication → Users → Add user (email + password)<br/>
-        2. انسخ UID → Firestore → collection "users" → document ID = UID → field: role = "admin"<br/>
-        3. Firestore → Rules → الصق firestore.rules → Publish<br/>
-        4. (اختياري) Storage → Rules → الصق storage.rules → Publish
-      </div>
+      <p style="text-align:center;color:var(--text-dim);font-size:0.75rem;margin-top:12px;">
+        كلمة المرور الافتراضية: <strong>admin123</strong> (يمكن تغييرها من لوحة التحكم)
+      </p>
     </div>
   </div>
 
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
-  <script src="../js/config.js"></script>
-  <script src="../js/firebase.js"></script>
   <script>
+    const ADMIN_PASSWORD = localStorage.getItem('ah_admin_password') || 'admin123';
     const form = document.getElementById('loginForm');
     const status = document.getElementById('status');
-    form.addEventListener('submit', async (e) => {
+    form.addEventListener('submit', (e) => {
       e.preventDefault();
-      if (!window.AH.isConfigured) {
-        status.textContent = 'Firebase غير مُعد. عدّل js/config.js.';
-        status.className = 'form-status error';
-        return;
-      }
-      status.textContent = 'جاري تسجيل الدخول...';
-      status.className = 'form-status';
-      const email = document.getElementById('email').value.trim();
-      const password = document.getElementById('password').value;
-      try {
-        const cred = await window.AH.firebase.auth.signInWithEmailAndPassword(email, password);
-        const uid = cred.user.uid;
-        const snap = await window.AH.fb.collection('users').doc(uid).get();
-        if (!snap.exists || snap.data().role !== 'admin') {
-          await window.AH.firebase.auth.signOut();
-          status.textContent = 'هذا الحساب ليس مديراً.';
-          status.className = 'form-status error';
-          return;
-        }
-        window.location.href = 'index.html';
-      } catch (err) {
-        status.textContent = err.message;
+      const pw = document.getElementById('password').value;
+      if (pw === ADMIN_PASSWORD) {
+        sessionStorage.setItem('ah_admin', '1');
+        status.textContent = 'تم تسجيل الدخول بنجاح';
+        status.className = 'form-status success';
+        setTimeout(() => { window.location.href = 'index.html'; }, 500);
+      } else {
+        status.textContent = 'كلمة المرور غير صحيحة';
         status.className = 'form-status error';
       }
     });

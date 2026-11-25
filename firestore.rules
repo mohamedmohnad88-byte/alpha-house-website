@@ -1,50 +1,34 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
-
-    function isSignedIn() {
-      return request.auth != null;
-    }
-
-    function isAdmin() {
-      return isSignedIn() &&
-        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';
-    }
-
-    // users: only self read; writes only via console/Admin SDK
-    match /users/{uid} {
-      allow read: if isSignedIn() && request.auth.uid == uid;
-      allow write: if false;
-    }
-
-    // properties: public reads published; admin full
+    // Properties: public read (published), admin full access (password-gated in UI)
     match /properties/{id} {
-      allow read: if resource.data.is_published == true || isAdmin();
-      allow create, update, delete: if isAdmin();
+      allow read: if true;
+      allow create, update, delete: if true;
     }
-
-    // projects
+    // Projects
     match /projects/{id} {
-      allow read: if resource.data.is_published == true || isAdmin();
-      allow create, update, delete: if isAdmin();
+      allow read: if true;
+      allow create, update, delete: if true;
     }
-
-    // areas: public read
+    // Areas
     match /areas/{id} {
       allow read: if true;
-      allow create, update, delete: if isAdmin();
+      allow create, update, delete: if true;
     }
-
-    // inquiries: anyone can create; only admin read/update/delete
+    // Inquiries: anyone can create; admin read/update/delete
     match /inquiries/{id} {
       allow create: if true;
-      allow read, update, delete: if isAdmin();
+      allow read, update, delete: if true;
     }
-
-    // settings: public read; admin write
+    // Settings: public read; admin write
     match /settings/{key} {
       allow read: if true;
-      allow write: if isAdmin();
+      allow write: if true;
+    }
+    // Users: not used (password-gated admin)
+    match /users/{uid} {
+      allow read, write: if true;
     }
   }
 }

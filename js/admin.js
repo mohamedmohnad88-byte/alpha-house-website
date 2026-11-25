@@ -17,56 +17,18 @@
     console.log('[admin]', msg);
   }
 
-  // ============ AUTH GUARD ============
+  // ============ AUTH GUARD (password-based, no Firebase Auth needed) ============
   async function guard() {
-    dbg('guard start; db=' + !!db + ' auth=' + !!auth);
-    if (!db || !auth) {
-      const el = document.getElementById('propertiesTableWrap');
-      if (el) el.innerHTML = '<p class="form-status error">Firebase غير مُعد. تحقق من js/config.js.</p>';
-      dbg('Firebase not configured');
+    dbg('guard start; session=' + !!sessionStorage.getItem('ah_admin'));
+    if (sessionStorage.getItem('ah_admin') !== '1') {
+      dbg('no session -> redirect login');
+      window.location.href = 'login.html';
       return false;
     }
-    return new Promise((resolve) => {
-      const unsub = auth.onAuthStateChanged(async (user) => {
-        unsub();
-        if (!user) {
-          dbg('no user -> redirect login');
-          window.location.href = 'login.html';
-          resolve(false);
-          return;
-        }
-        dbg('logged in as UID=' + user.uid + ' email=' + user.email);
-        try {
-          const snap = await db.collection('users').doc(user.uid).get();
-          if (!snap.exists) {
-            dbg('no users doc for ' + user.uid);
-            await auth.signOut();
-            alert('هذا الحساب غير مسجل كمدير.\n\nالإصلاح:\n1. Firebase Console → Firestore → collection "users"\n2. أنشئ document ID = ' + user.uid + '\n3. field: role = "admin"\n\nأو افتح admin/login.html للاطلاع على التعليمات.');
-            window.location.href = 'login.html';
-            resolve(false);
-            return;
-          }
-          const role = snap.data().role;
-          dbg('role = ' + role);
-          if (role !== 'admin') {
-            await auth.signOut();
-            alert('دور الحساب: ' + role + ' (ليس admin).');
-            window.location.href = 'login.html';
-            resolve(false);
-            return;
-          }
-          const el = document.getElementById('adminEmail');
-          if (el) el.textContent = user.email + ' (admin)';
-          dbg('guard OK');
-          resolve(true);
-        } catch (e) {
-          dbg('guard error: ' + e.message);
-          const el = document.getElementById('propertiesTableWrap');
-          if (el) el.innerHTML = '<p class="form-status error">خطأ: ' + e.message + '</p>';
-          resolve(false);
-        }
-      });
-    });
+    const el = document.getElementById('adminEmail');
+    if (el) el.textContent = 'admin (password)';
+    dbg('guard OK');
+    return true;
   }
 
   // ============ HELPERS ============
@@ -99,8 +61,8 @@
     });
   });
 
-  document.getElementById('logoutBtn').addEventListener('click', async () => {
-    await auth.signOut();
+  document.getElementById('logoutBtn').addEventListener('click', () => {
+    sessionStorage.removeItem('ah_admin');
     window.location.href = 'login.html';
   });
 
