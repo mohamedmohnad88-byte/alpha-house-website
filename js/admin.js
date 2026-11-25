@@ -228,6 +228,7 @@
     const form = document.getElementById('propertyForm');
     form.reset();
     form.id.value = '';
+    form.is_published.checked = true;
     document.getElementById('propertyImagesPreview').innerHTML = '';
     document.getElementById('propertyFormCard').querySelector('input[name="images"]').value = '';
     document.getElementById('propertyFormTitle').textContent = 'عقار جديد';
